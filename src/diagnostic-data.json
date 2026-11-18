@@ -1,0 +1,338 @@
+[
+  {
+    "id": "n5-q1",
+    "course": "cpn5",
+    "prompt": "In Microsoft Word, which tab is used first when a user wants to change page orientation from portrait to landscape?",
+    "options": [
+      "Insert",
+      "Layout",
+      "Review",
+      "View"
+    ],
+    "correct": 1,
+    "leak": "RIBBON_NAV",
+    "rationale": "Orientation lives under Layout because it controls page setup."
+  },
+  {
+    "id": "n5-q2",
+    "course": "cpn5",
+    "prompt": "A student wants to send the same letter to many recipients using names from a list. Which Word tab should they open first?",
+    "options": [
+      "References",
+      "Mailings",
+      "Home",
+      "Design"
+    ],
+    "correct": 1,
+    "leak": "MAIL_MERGE",
+    "rationale": "Mail merge tools sit on the Mailings tab."
+  },
+  {
+    "id": "n5-q4",
+    "course": "cpn5",
+    "prompt": "A worksheet must print on one page wide. Which area should the user use first in Excel?",
+    "options": [
+      "Home > Styles",
+      "Data > Forecast",
+      "Page Layout > Scale to Fit",
+      "Review > Protect Sheet"
+    ],
+    "correct": 2,
+    "leak": "PRINT_OUTPUT",
+    "rationale": "Scale to Fit controls width and page fitting."
+  },
+  {
+    "id": "n5-q5",
+    "course": "cpn5",
+    "prompt": "If a formula must keep the tax rate cell fixed when copied down, what should be used?",
+    "options": [
+      "Merged cells",
+      "Absolute reference",
+      "Conditional formatting",
+      "Filter"
+    ],
+    "correct": 1,
+    "leak": "EXCEL_REFERENCING",
+    "rationale": "Absolute referencing locks the source cell during copying."
+  },
+  {
+    "id": "n5-q6",
+    "course": "cpn5",
+    "prompt": "Which command should be used if the paper says 'use a function to count cells that meet a condition'?",
+    "options": [
+      "COUNTIF",
+      "COUNTA",
+      "COUNTBLANK",
+      "SUM"
+    ],
+    "correct": 0,
+    "leak": "EXCEL_FUNCTIONS",
+    "rationale": "COUNTIF counts cells matching a specific rule."
+  },
+  {
+    "id": "n5-q9",
+    "course": "cpn5",
+    "prompt": "Which sequence best matches the information processing cycle tested in N5?",
+    "options": [
+      "Input, processing, storage, output",
+      "Input, processing, output, storage",
+      "Storage, processing, output, input",
+      "Processing, output, input, storage"
+    ],
+    "correct": 1,
+    "leak": "THEORY_RECALL",
+    "rationale": "The standard sequence is input, processing, output, then storage."
+  },
+  {
+    "id": "n5-g2q1",
+    "course": "cpn5",
+    "prompt": "The paper says 'Save the document in your examination folder as REPORT_1'. Which action best follows that instruction?",
+    "options": [
+      "Use Save As and type REPORT_1 in the required folder",
+      "Print the document first and rename the hard copy",
+      "Close the file and hope autosave keeps the right name",
+      "Create a shortcut on the desktop"
+    ],
+    "correct": 0,
+    "leak": "FILE_MGMT",
+    "rationale": "Save As is the controlled method for creating the required file name in the correct folder."
+  },
+  {
+    "id": "n5-g2q3",
+    "course": "cpn5",
+    "prompt": "If the exam says 'move the file', what should happen after the action is completed correctly?",
+    "options": [
+      "The file exists in the new folder only",
+      "The file exists in both folders",
+      "The file is printed automatically",
+      "The file becomes read-only"
+    ],
+    "correct": 0,
+    "leak": "FILE_MGMT",
+    "rationale": "Move transfers the file to the new location instead of copying it."
+  },
+  {
+    "id": "n5-g3q1",
+    "course": "cpn5",
+    "prompt": "A heading must appear automatically in a table of contents later in the document. Which method is correct?",
+    "options": [
+      "Apply a heading style to the heading text",
+      "Make the heading bold and larger manually",
+      "Press Enter several times above the heading",
+      "Insert the heading inside a text box"
+    ],
+    "correct": 0,
+    "leak": "WORD_LAYOUT",
+    "rationale": "Automatic document structures depend on styles, not manual appearance only."
+  },
+  {
+    "id": "n5-g3q9",
+    "course": "cpn5",
+    "prompt": "The paper says 'apply 1.5 line spacing to the body text only'. What must the learner control carefully?",
+    "options": [
+      "Select the correct text range before changing spacing",
+      "Change the whole document and hope it is accepted",
+      "Use Enter after every line instead",
+      "Insert a page break before the body text"
+    ],
+    "correct": 0,
+    "leak": "INSTRUCTION_CONTROL",
+    "rationale": "The instruction limits the change to a specific part of the document."
+  },
+  {
+    "id": "n5-g4q4",
+    "course": "cpn5",
+    "prompt": "A question says 'display the answer to 2 decimals'. Which statement is correct?",
+    "options": [
+      "Formatting changes appearance; rounding changes the stored value",
+      "Formatting and rounding always do exactly the same thing",
+      "Only charts can display decimals",
+      "Decimals are controlled from the Data tab"
+    ],
+    "correct": 0,
+    "leak": "INSTRUCTION_CONTROL",
+    "rationale": "Spreadsheet marks are lost when students confuse number formatting with real rounding."
+  },
+  {
+    "id": "n5-g5q3",
+    "course": "cpn5",
+    "prompt": "The task says to transfer evidence from one subtask into another. What protects the marks best?",
+    "options": [
+      "Verify file names, paths, and the exact required output before moving on",
+      "Rename everything at the end if there is time",
+      "Paste random screenshots to show effort",
+      "Ignore the evidence instruction if the main answer is correct"
+    ],
+    "correct": 0,
+    "leak": "INTEGRATION_CONTROL",
+    "rationale": "Integration marks depend on controlled transfer, not partial completion in isolation."
+  },
+  {
+    "id": "n6-n6q2",
+    "course": "cpn6",
+    "prompt": "A question asks about synchronous online communication between participants in real time. Which term fits best?",
+    "options": [
+      "Asynchronous archive",
+      "Real-time communication",
+      "File compression",
+      "Peripheral setup"
+    ],
+    "correct": 1,
+    "leak": "COMMUNICATION_THEORY",
+    "rationale": "Synchronous tools operate live in the same session."
+  },
+  {
+    "id": "n6-n6q3",
+    "course": "cpn6",
+    "prompt": "When a task asks for collaborative cloud note sharing, what must the student verify first?",
+    "options": [
+      "Share permissions",
+      "Desktop wallpaper",
+      "USB drive label",
+      "Printer queue"
+    ],
+    "correct": 0,
+    "leak": "CLOUD_COLLAB",
+    "rationale": "Cloud collaboration fails immediately when access rights are wrong."
+  },
+  {
+    "id": "n6-n6q4",
+    "course": "cpn6",
+    "prompt": "Which sequence best matches the required intervention discipline for a timed N6 task?",
+    "options": [
+      "Read, plan, execute, verify",
+      "Guess, type, print, retry",
+      "Open, decorate, submit, explain",
+      "Copy, paste, save, exit"
+    ],
+    "correct": 0,
+    "leak": "TIME_DISCIPLINE",
+    "rationale": "The intervention engine keeps the same fixed sequence across streams."
+  },
+  {
+    "id": "n6-n6g2q1",
+    "course": "cpn6",
+    "prompt": "In an advanced N6 Word task, what is the strongest reason to prefer the correct layout tool over manual spacing?",
+    "options": [
+      "Because the paper rewards controlled method and stable output, not visual guesswork",
+      "Because manual spacing always creates automatic styles",
+      "Because the examiner ignores layout method",
+      "Because spacing makes print settings irrelevant"
+    ],
+    "correct": 0,
+    "leak": "INSTRUCTION_CONTROL",
+    "rationale": "N6 practical work still punishes method weakness even when the page looks acceptable at first glance."
+  },
+  {
+    "id": "n6-n6g2q2",
+    "course": "cpn6",
+    "prompt": "A spreadsheet task requires a chart that stays readable in print. What should the learner verify?",
+    "options": [
+      "Titles, labels, and output layout before final lock",
+      "Only the chart colour theme",
+      "Whether the workbook name is short",
+      "Whether the chart was moved with the mouse"
+    ],
+    "correct": 0,
+    "leak": "SCREENSHOT_EVIDENCE",
+    "rationale": "Chart and output readability are mark-bearing presentation controls in higher practical work."
+  },
+  {
+    "id": "n6-n6g2q4",
+    "course": "cpn6",
+    "prompt": "Why is print/output checking more important in advanced practical work than students often assume?",
+    "options": [
+      "Because layout, chart, and structure marks can still be lost after the main content is finished",
+      "Because print settings replace formula checking",
+      "Because output no longer matters at N6",
+      "Because practical papers are theory-only"
+    ],
+    "correct": 0,
+    "leak": "PRINT_OUTPUT",
+    "rationale": "Advanced practical marks still depend on the final output behaving correctly."
+  },
+  {
+    "id": "n6-n6g2q5",
+    "course": "cpn6",
+    "prompt": "A task asks for non-contiguous selection before charting. What is being tested most directly?",
+    "options": [
+      "Controlled spreadsheet manipulation",
+      "Internet speed",
+      "Database validation",
+      "File compression"
+    ],
+    "correct": 0,
+    "leak": "INTEGRATION_CONTROL",
+    "rationale": "N6 practical work often checks whether learners can manipulate data structures deliberately."
+  },
+  {
+    "id": "n6-n6g2q7",
+    "course": "cpn6",
+    "prompt": "What is the safest response when an N6 practical instruction is very specific about format and placement?",
+    "options": [
+      "Follow the wording exactly and verify the output against it",
+      "Choose a cleaner alternative layout",
+      "Ignore the placement if the content is right",
+      "Use a screenshot instead of the required live object"
+    ],
+    "correct": 0,
+    "leak": "INSTRUCTION_CONTROL",
+    "rationale": "Specific wording defines the mark-bearing deliverable and should not be creatively reinterpreted."
+  },
+  {
+    "id": "n6-n6g3q2",
+    "course": "cpn6",
+    "prompt": "Why is notebook organisation a mark-bearing issue in N6 rather than a personal preference?",
+    "options": [
+      "Because evidence, sequence, and retrievability affect later tasks and lecturer judgement",
+      "Because notebook work never connects to the paper",
+      "Because neatness only matters for attendance",
+      "Because notebook tools replace all theory"
+    ],
+    "correct": 0,
+    "leak": "NOTEBOOK_WORKFLOW",
+    "rationale": "The notebook workflow is part of controlled task execution, not just visual tidiness."
+  },
+  {
+    "id": "n6-n6g3q4",
+    "course": "cpn6",
+    "prompt": "What is the practical difference between synchronous and asynchronous communication in workflow tasks?",
+    "options": [
+      "Synchronous happens in real time; asynchronous allows delayed response",
+      "Synchronous is always offline; asynchronous is always face-to-face",
+      "They are identical terms",
+      "Only asynchronous needs internet access"
+    ],
+    "correct": 0,
+    "leak": "COMMUNICATION_THEORY",
+    "rationale": "N6 communication theory should support correct platform and workflow decisions."
+  },
+  {
+    "id": "n6-n6g3q5",
+    "course": "cpn6",
+    "prompt": "The task asks the learner to capture, store, and reuse evidence across subtasks. What is being tested most directly?",
+    "options": [
+      "Workflow integration control",
+      "Only typing speed",
+      "Only theory recall",
+      "Only print orientation"
+    ],
+    "correct": 0,
+    "leak": "INTEGRATION_CONTROL",
+    "rationale": "Evidence handling becomes part of the wider integration workflow in N6."
+  },
+  {
+    "id": "n6-n6g4q5",
+    "course": "cpn6",
+    "prompt": "If a learner produces the right-looking output through the wrong method in the mock, what remains true?",
+    "options": [
+      "Method weakness still matters because the exam rewards controlled execution",
+      "The method never matters if the result looks right",
+      "Wrong method improves the rubric score",
+      "Memoranda check appearance only"
+    ],
+    "correct": 0,
+    "leak": "INSTRUCTION_CONTROL",
+    "rationale": "A paper-backed mock should still reflect method-sensitive marking logic."
+  }
+]

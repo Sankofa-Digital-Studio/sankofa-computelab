@@ -1,0 +1,42 @@
+SANKOFA STUDY HUB
+COMPUTER PRACTICE N5 — THEORY TO PRACTICE
+
+1. Follow the information from source to output
+A form captures a request (input), a workbook groups and counts requests
+(processing), a controlled master stores the records (storage), a dashboard
+shows the counts (output), and an email sends the decision (communication).
+Try it: Map all five stages for a library returning an overdue device.
+
+2. Explain what changed and why
+An SSD retains saved files after shutdown. RAM holds the active work that
+applications use while running. A PC with enough storage may still run slowly
+if several applications need more working memory.
+Try it: Give one check that would help distinguish the two problems.
+
+3. Start with the command
+Define: state what the term means.
+Compare: use the same criteria on both choices.
+Explain: give a cause and effect that fits the situation.
+Recommend: make a choice, use the evidence and state a consequence.
+Try it: Compare an email attachment and a controlled share link on
+permissions, version control and offline access.
+
+4. Prepare evidence before editing
+Identify the approved copy by its control record as well as its name.
+Work on a copy, preserve the original, keep a readable folder structure and
+reopen the working file and requested print evidence.
+Try it: Describe what would prove that a newer draft is approved.
+
+5. Check data before trusting the number
+COUNT counts numeric cells. COUNTA counts non-empty cells. COUNTIF counts
+cells that meet a rule. A number stored as text can affect totals and
+sorting. With a shared rate, test that its reference stays fixed after filling.
+Try it: Test a rule marked "at least 300" at 299, 300 and 301.
+
+6. Prove transfer
+After checking your first answer, change one fact in the scenario. Predict
+which output should change before editing. Check the result in the source
+workbook, the final document and your evidence notes.
+
+Based on the supplied N5 Theory first pass and assessment-preparation
+materials. Use alongside the N5 practice bank and Careers Clinic rehearsal.

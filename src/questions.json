@@ -1,0 +1,412 @@
+[
+  {
+    "id": "T01",
+    "title": "Cloud adoption case",
+    "marks": 15,
+    "topic": "Computer concepts",
+    "skill": "Cloud services",
+    "app": "Theory",
+    "type": "Case study",
+    "course": "cpn6",
+    "sessions": [
+      "November 2022",
+      "November 2023",
+      "November 2024",
+      "May 2025"
+    ],
+    "prompt": "A rural college wants to move its course documents from USB drives to a cloud service. Explain three benefits, three risks, two controls and distinguish SaaS from local software. End with a justified recommendation.",
+    "hint": "Group your response by benefits, risks, controls and recommendation. Tie each point to the college.",
+    "check": "Check for three distinct benefits and risks, two specific controls and a justified recommendation. Explain how hosted applications differ from locally installed software.",
+    "alignment": "2022 Q1; 2023 Q1; 2024/2025 Q1"
+  },
+  {
+    "id": "T02",
+    "title": "Computing vocabulary",
+    "marks": 10,
+    "topic": "Computer concepts",
+    "skill": "Computing terms",
+    "app": "Theory",
+    "type": "Short answer",
+    "course": "cpn6",
+    "sessions": [
+      "November 2022",
+      "November 2023",
+      "November 2024",
+      "May 2025"
+    ],
+    "prompt": "Define: dedicated device, portable device, cloud storage, file compression and software update. Give a practical example for each.",
+    "hint": "For each term, write what it does and one place you would use it.",
+    "check": "Each of the five entries should have its own definition and a plausible real-life example.",
+    "alignment": "2022 Q1; 2023 Q1; 2024/2025 Q1"
+  },
+  {
+    "id": "T03",
+    "title": "Email professionalism",
+    "marks": 15,
+    "topic": "Networks and communication",
+    "skill": "Professional email",
+    "app": "Theory",
+    "type": "Case study",
+    "course": "cpn6",
+    "sessions": [
+      "November 2022",
+      "November 2023",
+      "November 2024",
+      "May 2025"
+    ],
+    "prompt": "Rewrite this unsuitable email as a professional message to a college administrator: 'HEY!!! u lost my marks AGAIN send them NOW!!!'. Supply a subject, greeting, clear request, identifying information without private ID, closing and explain three email safety rules.",
+    "hint": "Plan the subject, purpose, identifying context and sign-off before drafting.",
+    "check": "Check that your subject makes the request clear. Include the course or assessment details needed to locate the result, a respectful request, a closing and three specific safety habits.",
+    "alignment": "2022 Q2; 2023 Q2; 2024/2025 Q2"
+  },
+  {
+    "id": "T04",
+    "title": "Communication comparison",
+    "marks": 10,
+    "topic": "Networks and communication",
+    "skill": "Communication tools",
+    "app": "Theory",
+    "type": "Short answer",
+    "course": "cpn6",
+    "sessions": [
+      "November 2022",
+      "November 2023",
+      "November 2024",
+      "May 2025"
+    ],
+    "prompt": "Compare FTP and VoIP in purpose and give a workplace use for each. Explain two benefits and two limitations of electronic communication.",
+    "hint": "Give both tools the same comparison headings.",
+    "check": "FTP is for file transfer. VoIP carries voice over an IP network. Compare their uses and support your discussion with concrete benefits and limitations.",
+    "alignment": "2022 Q2; 2023 Q2; 2024/2025 Q2"
+  },
+  {
+    "id": "T05",
+    "title": "Data-to-decision exercise",
+    "marks": 15,
+    "topic": "Data and computational thinking",
+    "skill": "Data validation",
+    "app": "Theory",
+    "type": "Case study",
+    "course": "cpn6",
+    "sessions": [
+      "November 2022",
+      "November 2023",
+      "November 2024",
+      "May 2025"
+    ],
+    "prompt": "A campus records attendance as 28, 31, 29, 32, 30. Calculate the mean; explain data versus information; propose a verification check and validation rule; decompose an attendance-report workflow into four steps.",
+    "hint": "Separate the source-matching check from the allowed-value rule.",
+    "check": "The mean is 30. Raw attendance counts become information when interpreted. Verification compares values to the source. Validation applies a rule such as accepting whole numbers within room capacity.",
+    "alignment": "2022 Q3; 2023 Q3; 2024/2025 Q3"
+  },
+  {
+    "id": "T06",
+    "title": "Logic statements",
+    "marks": 10,
+    "topic": "Data and computational thinking",
+    "skill": "Computational thinking",
+    "app": "Theory",
+    "type": "Short answer",
+    "course": "cpn6",
+    "sessions": [
+      "November 2022",
+      "November 2023",
+      "November 2024",
+      "May 2025"
+    ],
+    "prompt": "For each statement indicate True/False and justify briefly: (a) Verification checks whether copied data matches a source. (b) Validation guarantees a fact is true. (c) Decomposition breaks problems into parts. (d) Abstraction focuses on relevant detail. (e) Raw data is always a decision.",
+    "hint": "Look carefully at absolute language such as “guarantees” and “always”.",
+    "check": "Compare your decisions with True, False, True, True, False. Explain each verdict, especially why a valid value can still be inaccurate.",
+    "alignment": "2022 Q3; 2023 Q3; 2024/2025 Q3"
+  },
+  {
+    "id": "T07",
+    "title": "Digital citizenship audit",
+    "marks": 15,
+    "topic": "Digital citizenship",
+    "skill": "Online safety",
+    "app": "Theory",
+    "type": "Case study",
+    "course": "cpn6",
+    "sessions": [
+      "November 2022",
+      "November 2023",
+      "November 2024",
+      "May 2025"
+    ],
+    "prompt": "A student posts a class list publicly, reuses passwords and forwards a suspicious link. Identify three risks, propose four corrective actions, explain digital footprint and name two accessibility accommodations.",
+    "hint": "Pair each observed action with a risk and a practical control.",
+    "check": "Check for privacy, account security and suspicious-link exposure. Tie the controls to the risks and explain how online activity leaves a lasting record.",
+    "alignment": "2022 Q4–5; 2023 Q4–5; 2024/2025 Q4–5"
+  },
+  {
+    "id": "T08",
+    "title": "Social-media classification",
+    "marks": 10,
+    "topic": "Digital citizenship",
+    "skill": "Social platforms",
+    "app": "Theory",
+    "type": "Short answer",
+    "course": "cpn6",
+    "sessions": [
+      "November 2022",
+      "November 2023",
+      "November 2024",
+      "May 2025"
+    ],
+    "prompt": "Give an example and appropriate educational use for each: social networking, photo sharing, video sharing, blogging and interactive community platform. Explain why categories can overlap.",
+    "hint": "Name the platform, the educational task and a case where its function overlaps.",
+    "check": "Check that all five platform categories have a suitable example and clear educational use. A video-sharing platform may also host community discussions.",
+    "alignment": "2022 Q4–5; 2023 Q4–5; 2024/2025 Q4–5"
+  },
+  {
+    "id": "N01",
+    "title": "Safety training notebook",
+    "marks": 20,
+    "topic": "Note organisation",
+    "skill": "Notebook structure",
+    "app": "OneNote",
+    "type": "Practical",
+    "course": "cpn6",
+    "sessions": [
+      "November 2022",
+      "November 2023",
+      "November 2024",
+      "May 2025"
+    ],
+    "prompt": "Create notebook Campus Safety; sections Orientation and Incidents; pages Fire Procedure and Incident Log. Add a formatted 3-column table (Hazard, Action, Contact), three entries, a dated checklist, a labelled sketch made with drawing tools, and an embedded screenshot of a locally created notice. Print or export evidence.",
+    "hint": "Create the notebook structure first, then add content, drawing and output evidence.",
+    "check": "Check both sections and both pages, the three-column table, three entries, a dated checklist, an editable drawing, a screenshot and readable evidence.",
+    "alignment": "2022 Q6; 2023 Q6; 2024/2025 Q6"
+  },
+  {
+    "id": "N02",
+    "title": "Organise research notes",
+    "marks": 20,
+    "topic": "Note organisation",
+    "skill": "Page organisation",
+    "app": "OneNote",
+    "type": "Practical",
+    "course": "cpn6",
+    "sessions": [
+      "November 2022",
+      "November 2023",
+      "November 2024",
+      "May 2025"
+    ],
+    "prompt": "Create notebook Student Support, section Services, pages Library and Counselling. Add an introductory paragraph and three bullets per page. Add a tag to one important task, move a paragraph between pages and show the final page hierarchy in evidence.",
+    "hint": "Use the notebook sidebar to check the final hierarchy before exporting evidence.",
+    "check": "Check the final page hierarchy, three bullets per page, the tagged task, the relocated paragraph and evidence of the finished structure.",
+    "alignment": "2022 Q6; 2023 Q6; 2024/2025 Q6"
+  },
+  {
+    "id": "W01",
+    "title": "Formal circular",
+    "marks": 25,
+    "topic": "Document production",
+    "skill": "Document formatting",
+    "app": "Word",
+    "type": "Practical",
+    "course": "cpn6",
+    "sessions": [
+      "September 2020",
+      "November 2022",
+      "November 2023",
+      "November 2024",
+      "May 2025"
+    ],
+    "prompt": "Create a circular for the Ndlovu Training Centre about a career fair on 12 February 2027. Include a 3-row programme table: Registration 09:00; Employer talks 10:00; CV clinic 11:30. Use A4 portrait, 2.54 cm margins, 12 pt body, a 16 pt centred heading, a right tab stop for date, page number and header with candidate number and W01.",
+    "hint": "Set page geometry before formatting the title and programme.",
+    "check": "In print preview, check A4 portrait, page boundaries, the three programme rows, the aligned date, heading styles, header and page number.",
+    "alignment": "2022 Q7–8; 2023 Q7–8; 2024/2025 Q7–8; 2020 Section B"
+  },
+  {
+    "id": "W02",
+    "title": "Edit and proofread",
+    "marks": 25,
+    "topic": "Document production",
+    "skill": "Page layout",
+    "app": "Word",
+    "type": "Practical",
+    "course": "cpn6",
+    "sessions": [
+      "September 2020",
+      "November 2022",
+      "November 2023",
+      "November 2024",
+      "May 2025"
+    ],
+    "prompt": "Create a two-page information sheet on safe online job applications (minimum 230 words). Include two section headings, a five-item numbered list, a footnote defining 'phishing', one landscape section for a comparison table, a page break and a footer. Use Find and Replace to change all occurrences of 'applicant' to 'candidate'.",
+    "hint": "Use section breaks around the landscape page. Preview the pages before saving.",
+    "check": "Check both orientations in preview. Confirm the numbered list, footnote, separate page break, footer and the updated wording.",
+    "alignment": "2022 Q7–8; 2023 Q7–8; 2024/2025 Q7–8; 2020 Section B"
+  },
+  {
+    "id": "W03",
+    "title": "Mail merge and labels",
+    "marks": 30,
+    "topic": "Document production",
+    "skill": "Mail merge",
+    "app": "Word",
+    "type": "Practical",
+    "course": "cpn6",
+    "sessions": [
+      "September 2020",
+      "November 2022",
+      "November 2023",
+      "November 2024",
+      "May 2025"
+    ],
+    "prompt": "Create recipient data with fields Name, Surname, Town, Session for: Naledi Molefe/Bloemfontein/Morning; Peter Dube/Klerksdorp/Afternoon; Amina Patel/Polokwane/Morning; Zola Maseko/Mahikeng/Afternoon. Draft an invitation to a digital skills workshop on 18 May 2027 with a personalised greeting and session. Merge four letters and create a matching set of four address labels.",
+    "hint": "Check the recipient table and preview each record before finishing the merge.",
+    "check": "Preview four letters and four labels. Each letter should pull the correct personalised greeting and session from the recipient data.",
+    "alignment": "2022 Q7–8; 2023 Q7–8; 2024/2025 Q7–8; 2020 Section B"
+  },
+  {
+    "id": "W04",
+    "title": "Advanced table and document layout",
+    "marks": 20,
+    "topic": "Document production",
+    "skill": "Table design",
+    "app": "Word",
+    "type": "Practical",
+    "course": "cpn6",
+    "sessions": [
+      "September 2020",
+      "November 2022",
+      "November 2023",
+      "November 2024",
+      "May 2025"
+    ],
+    "prompt": "Create a landscape report containing a five-column equipment inventory with four rows. Items: Laptop 6 at R7200; Printer 2 at R2500; Router 3 at R980; Projector 1 at R8400. Include calculated total cost as text after working it out, table caption, borders, shading, row sorting by item and a watermark reading TRAINING COPY.",
+    "hint": "Keep numeric amounts consistent and sort entire rows together.",
+    "check": "Grand total R59,540. Compare each quantity × unit cost, then check row sorting, caption, borders, shading, watermark and landscape preview.",
+    "alignment": "2022 Q7–8; 2023 Q7–8; 2024/2025 Q7–8; 2020 Section B"
+  },
+  {
+    "id": "E01",
+    "title": "Fees and discount analysis",
+    "marks": 30,
+    "topic": "Spreadsheet analysis",
+    "skill": "IF and summaries",
+    "app": "Excel",
+    "type": "Practical",
+    "course": "cpn6",
+    "sessions": [
+      "September 2020",
+      "November 2022",
+      "November 2023",
+      "November 2024",
+      "May 2025"
+    ],
+    "prompt": "Enter columns Learner, Course, Fee, Paid, Balance, Status. Records: Neo/Office/R1800/R900; Musa/IT/R2400/R2400; Priya/Office/R1800/R1800; Thuli/IT/R2400/R1200; Zola/Office/R1800/R600. Calculate Balance and IF Status = SETTLED when Balance=0 otherwise OUTSTANDING. Summarise total fees, total paid, outstanding balance and count of settled accounts.",
+    "hint": "Test your IF formula on one fully paid learner before filling down.",
+    "check": "Total fees R10,200, total paid R6,900, amount outstanding R3,300 and two settled learners. Check that the status column uses a formula.",
+    "alignment": "2022 Q9–10; 2023 Q9; 2024/2025 Q9 and later spreadsheet tasks; 2020 Section C"
+  },
+  {
+    "id": "E02",
+    "title": "Commission with absolute reference",
+    "marks": 25,
+    "topic": "Spreadsheet analysis",
+    "skill": "Absolute references",
+    "app": "Excel",
+    "type": "Practical",
+    "course": "cpn6",
+    "sessions": [
+      "September 2020",
+      "November 2022",
+      "November 2023",
+      "November 2024",
+      "May 2025"
+    ],
+    "prompt": "Create columns Agent, Sales, Commission, Net. Rows: Lindi 12500, Omar 18200, Zanele 9600, Farai 21400. Put commission rate 7.5% in H2. Use an absolute reference to calculate Commission, then Net=Sales-Commission. Add totals and currency formatting.",
+    "hint": "Keep the commission rate fixed when copying formulas down.",
+    "check": "Total commission R4,627.50. Excel should retain the same rate-cell address when the formula is copied. Check total sales of R61,700 and net of R57,072.50.",
+    "alignment": "2022 Q9–10; 2023 Q9; 2024/2025 Q9 and later spreadsheet tasks; 2020 Section C"
+  },
+  {
+    "id": "E03",
+    "title": "Criteria functions and chart",
+    "marks": 25,
+    "topic": "Spreadsheet analysis",
+    "skill": "Criteria functions",
+    "app": "Excel",
+    "type": "Practical",
+    "course": "cpn6",
+    "sessions": [
+      "September 2020",
+      "November 2022",
+      "November 2023",
+      "November 2024",
+      "May 2025"
+    ],
+    "prompt": "Enter department requests: Library 24; Finance 18; IT 36; Student Affairs 22; Security 10. Compute grand total, share of each department, count of departments with requests >=20 and the second-largest value. Create a column chart with a meaningful title and axis labels.",
+    "hint": "Keep the grand total fixed in the percentage formula.",
+    "check": "Grand total 110, three departments at or above 20 and second largest 24. Shares should total 100% before rounding. Inspect the chart labels.",
+    "alignment": "2022 Q9–10; 2023 Q9; 2024/2025 Q9 and later spreadsheet tasks; 2020 Section C"
+  },
+  {
+    "id": "E04",
+    "title": "Lookup and validation",
+    "marks": 30,
+    "topic": "Spreadsheet analysis",
+    "skill": "Lookup and validation",
+    "app": "Excel",
+    "type": "Practical",
+    "course": "cpn6",
+    "sessions": [
+      "September 2020",
+      "November 2022",
+      "November 2023",
+      "November 2024",
+      "May 2025"
+    ],
+    "prompt": "Build price list with Code/Item/Price: P11/Paper/75; P12/Ink/340; P13/Folder/25; P14/Stapler/95. On Orders sheet enter P12 qty 3, P11 qty 6, P14 qty 2, P13 qty 10. Use XLOOKUP or VLOOKUP to retrieve item/price; calculate line total; validate codes against the price list; show grand total.",
+    "hint": "Check one code manually, then test an invalid code.",
+    "check": "The total should be R1,910. Check that changing an item code changes the lookup results and that an invalid code is rejected.",
+    "alignment": "2022 Q9–10; 2023 Q9; 2024/2025 Q9 and later spreadsheet tasks; 2020 Section C"
+  },
+  {
+    "id": "I01",
+    "title": "College information campaign",
+    "marks": 40,
+    "topic": "Exam readiness",
+    "skill": "Cross-app evidence",
+    "app": "Integrated",
+    "type": "Practical",
+    "course": "cpn6",
+    "sessions": [
+      "September 2020",
+      "November 2022",
+      "November 2023",
+      "November 2024",
+      "May 2025"
+    ],
+    "prompt": "Use Excel to analyse 4 workshop attendance values (Mon 26, Tue 34, Wed 41, Thu 39) and create a chart. Insert the chart into a one-page Word report with two evidence-based conclusions. Create a OneNote page with a summary and checklist. Save original files and export one-page evidence for each application.",
+    "hint": "Finish the workbook first so your written conclusions match the numbers.",
+    "check": "Attendance adds to 140. Wednesday was highest at 41. Confirm that the Word conclusions match the Excel chart and that OneNote has both a summary and checklist.",
+    "alignment": "2020 alternative practical sections; 2022–2025 combined practical workflow"
+  },
+  {
+    "id": "I02",
+    "title": "Timed examination simulation",
+    "marks": 60,
+    "topic": "Exam readiness",
+    "skill": "Exam timing",
+    "app": "Integrated",
+    "type": "Practical",
+    "course": "cpn6",
+    "sessions": [
+      "September 2020",
+      "November 2022",
+      "November 2023",
+      "November 2024",
+      "May 2025"
+    ],
+    "prompt": "Within 75 minutes complete: (A) a professional email explaining why a suspicious attachment should not be opened (10); (B) a Word invitation with a two-column schedule table and header (20); (C) Excel expense table with 4 amounts R450, R780, R320, R650, 15% VAT, total and chart (20); (D) OneNote notebook with a section, page and formatted checklist (10). Submit editable files.",
+    "hint": "Allocate the 75 minutes by section and reserve final minutes for file checks.",
+    "check": "Check the email, Word, Excel and OneNote evidence separately. Excel subtotal R2,200, VAT R330 and final total R2,530. Open each editable file before submission.",
+    "alignment": "2020 alternative practical sections; 2022–2025 combined practical workflow"
+  }
+]

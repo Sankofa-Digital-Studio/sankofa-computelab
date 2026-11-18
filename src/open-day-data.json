@@ -1,0 +1,21 @@
+{
+  "bookings": [
+    ["Friday", "IT", 24, 30],
+    ["Friday", "DES", 18, 25],
+    ["Saturday AM", "IT", 44, 40],
+    ["Saturday AM", "DES", 32, 34],
+    ["Saturday PM", "BUS", 30, 36],
+    ["Saturday PM", "BUS", 19, 25]
+  ],
+  "rates": [
+    ["IT", "Digital Skills", 25],
+    ["DES", "Design Studio", 17],
+    ["BUS", "Business Clinic", 26]
+  ],
+  "recipients": [
+    ["Ama Ndlovu", "Digital Skills", "Friday"],
+    ["Lebo Mokoena", "Design Studio", "Saturday AM"],
+    ["Sam Daniels", "Business Clinic", "Saturday PM"],
+    ["Naledi Mahlangu", "Digital Skills", "Saturday AM"]
+  ]
+}

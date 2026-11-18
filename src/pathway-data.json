@@ -1,0 +1,375 @@
+{
+  "title": "Sankofa N5 Practical Curriculum Pathway",
+  "weeks": [
+    {
+      "week": 1,
+      "theme": "Baseline, file management, paper inspection, and command words",
+      "milestone": "Every learner can inspect an instruction, identify the required application, and produce correct file evidence.",
+      "sessions": [
+        {
+          "classNo": 1,
+          "focus": "Baseline practical mindset and command-word discipline",
+          "targetSkill": "Read, plan, execute, verify routine",
+          "reasoningRequirement": "Explain what the question asks for before touching the computer.",
+          "proofTask": "Mark a sample practical paper by circling command verbs, output evidence, and file-name requirements.",
+          "lmsExtensionTask": "Complete baseline leak gate and submit a one-paragraph method reflection.",
+          "remediationRule": "If command verbs are missed, assign instruction-control drills before practical work.",
+          "n6TransferLink": "N6 requires the same instruction-control routine across integrated tasks."
+        },
+        {
+          "classNo": 2,
+          "focus": "File management and evidence discipline",
+          "targetSkill": "Create, rename, move, copy, save-as, and verify files and folders.",
+          "reasoningRequirement": "Distinguish move from copy and file name from file extension.",
+          "proofTask": "Build a folder tree from paper instructions and explain where final evidence should be saved.",
+          "lmsExtensionTask": "Upload or record proof of final folder structure and file naming checklist.",
+          "remediationRule": "If file extension or wrong-folder errors appear, repeat strict file-control drills.",
+          "n6TransferLink": "N6 integration breaks quickly when file evidence is weak."
+        },
+        {
+          "classNo": 3,
+          "focus": "Timed baseline proof and correction",
+          "targetSkill": "Work under a 20-minute micro-practical window.",
+          "reasoningRequirement": "State the planned order before starting and the verification step before finishing.",
+          "proofTask": "Complete a mini file-control PBQ and correct a true/false scenario about save-as and file extensions.",
+          "lmsExtensionTask": "System records baseline leaks and recommends first remediation category.",
+          "remediationRule": "Critical file-control leaks block the next release until corrected.",
+          "n6TransferLink": "Baseline habits become the N6 evidence-control foundation."
+        }
+      ]
+    },
+    {
+      "week": 2,
+      "theme": "Word foundations: layout, tab stops, page breaks, tables, and justified content",
+      "milestone": "Learners can inspect a Word output and justify visible formatting evidence.",
+      "sessions": [
+        {
+          "classNo": 1,
+          "focus": "Word page setup and visible output evidence",
+          "targetSkill": "Margins, orientation, headers, footers, page numbering, and page breaks.",
+          "reasoningRequirement": "Explain why page setup is an output-control decision, not decoration.",
+          "proofTask": "Inspect a printed layout and identify where page break, header, footer, and numbering evidence appears.",
+          "lmsExtensionTask": "Complete Word layout inspection checklist.",
+          "remediationRule": "If evidence cannot be named, assign paper inspection before Word clicking drills.",
+          "n6TransferLink": "N6 reports require the same output evidence discipline."
+        },
+        {
+          "classNo": 2,
+          "focus": "Tabs, alignment, tables, and justified content",
+          "targetSkill": "Use tab stops, table structure, alignment, and justified paragraphs appropriately.",
+          "reasoningRequirement": "Tell when a tab stop is justified instead of spaces or a table.",
+          "proofTask": "Label a document sample: tab stop, table, alignment, page break, and justified paragraph.",
+          "lmsExtensionTask": "Submit true/false correction items on tab stops and page breaks.",
+          "remediationRule": "If learners use spaces for alignment, assign tab-stop rebuild practice.",
+          "n6TransferLink": "Professional layout control transfers into N6 document production."
+        },
+        {
+          "classNo": 3,
+          "focus": "Timed Word PBQ",
+          "targetSkill": "Rebuild a formatted document from inspection evidence.",
+          "reasoningRequirement": "Use the paper output to decide commands before execution.",
+          "proofTask": "Complete a 30-minute Word PBQ and explain two mark-earning layout decisions.",
+          "lmsExtensionTask": "Record Word layout leaks and route remediation.",
+          "remediationRule": "Weak layout evidence triggers Word layout and verification drills.",
+          "n6TransferLink": "N6 integrated reports reuse these Word decisions under more pressure."
+        }
+      ]
+    },
+    {
+      "week": 3,
+      "theme": "Word production, mail merge, hyperlinks, bookmarks, and output control",
+      "milestone": "Learners can plan multi-step Word production and verify the final output.",
+      "sessions": [
+        {
+          "classNo": 1,
+          "focus": "Mail merge logic",
+          "targetSkill": "Connect data source, insert fields, preview, finish, and verify output.",
+          "reasoningRequirement": "Explain each mail merge stage and what evidence proves it worked.",
+          "proofTask": "Write the mail merge sequence on paper before opening Word.",
+          "lmsExtensionTask": "Complete mail-merge sequencing quiz and correction items.",
+          "remediationRule": "If sequence is wrong, block timed merge tasks until the flow is stable.",
+          "n6TransferLink": "N6 integrated tasks depend on controlled source-to-output logic."
+        },
+        {
+          "classNo": 2,
+          "focus": "Hyperlinks, bookmarks, and cross-reference habits",
+          "targetSkill": "Insert and verify navigation points inside and across documents.",
+          "reasoningRequirement": "Choose link/bookmark only when navigation evidence is required.",
+          "proofTask": "Inspect a document and identify where a hyperlink or bookmark is justified.",
+          "lmsExtensionTask": "Submit inspection checklist with navigation evidence.",
+          "remediationRule": "If learners insert links without purpose, assign evidence-based selection drills.",
+          "n6TransferLink": "N6 OneNote and cloud work require the same navigation reasoning."
+        },
+        {
+          "classNo": 3,
+          "focus": "Output-control PBQ",
+          "targetSkill": "Produce, check, and explain final Word output.",
+          "reasoningRequirement": "Verify the final file name, pages, field output, and print preview.",
+          "proofTask": "Complete a mixed Word production PBQ with final evidence checklist.",
+          "lmsExtensionTask": "System records mail merge, layout, and print-output leaks.",
+          "remediationRule": "Output-control failures route to print preview and final evidence drills.",
+          "n6TransferLink": "Final-output discipline prevents avoidable N6 marks loss."
+        }
+      ]
+    },
+    {
+      "week": 4,
+      "theme": "Excel foundations: formulas on paper, references, arguments, and fault tracing",
+      "milestone": "Learners can write and explain a formula before entering it in Excel.",
+      "sessions": [
+        {
+          "classNo": 1,
+          "focus": "Formula anatomy on paper",
+          "targetSkill": "Identify function name, arguments, operators, cell references, and expected result.",
+          "reasoningRequirement": "Explain what each part of a formula contributes.",
+          "proofTask": "Write five formulas on paper and annotate function, arguments, and expected output.",
+          "lmsExtensionTask": "Complete paper formula proof task.",
+          "remediationRule": "If arguments are missing, assign formula anatomy recall before Excel execution.",
+          "n6TransferLink": "N6 formulas become harder when N5 formula anatomy is weak."
+        },
+        {
+          "classNo": 2,
+          "focus": "Relative, absolute, and mixed references",
+          "targetSkill": "Choose the correct reference type before copying formulas.",
+          "reasoningRequirement": "Explain what must stay fixed and what must change.",
+          "proofTask": "Predict copied formula changes on paper before testing in Excel.",
+          "lmsExtensionTask": "Submit reference tracing drill and correction notes.",
+          "remediationRule": "Absolute-reference leaks require copy-down drills before timed work.",
+          "n6TransferLink": "N6 data tasks amplify reference errors across larger models."
+        },
+        {
+          "classNo": 3,
+          "focus": "Fault tracing and correction",
+          "targetSkill": "Find formula errors by reading source cells, arguments, and output.",
+          "reasoningRequirement": "State whether the error is syntax, reference, logic, or formatting.",
+          "proofTask": "Correct true/false formula scenarios and complete an Excel PBQ.",
+          "lmsExtensionTask": "System records formula logic and verification leaks.",
+          "remediationRule": "Formula errors route to paper-before-computer proof until stable.",
+          "n6TransferLink": "Fault tracing is essential for N6 unfamiliar data contexts."
+        }
+      ]
+    },
+    {
+      "week": 5,
+      "theme": "Excel functions, sorting/filtering, charts, print setup, and speed discipline",
+      "milestone": "Learners can select the correct Excel method, not just the nearest command.",
+      "sessions": [
+        {
+          "classNo": 1,
+          "focus": "Function selection and typed formulas",
+          "targetSkill": "Use SUM, AVERAGE, MIN, MAX, COUNTIF, IF, ROUND, and lookup-style reasoning where applicable.",
+          "reasoningRequirement": "Choose a function by question wording and data shape.",
+          "proofTask": "Match function names to scenarios and type formula examples by hand.",
+          "lmsExtensionTask": "Complete function selection and true/false correction set.",
+          "remediationRule": "Menu-hunting without logic routes to function-selection drills.",
+          "n6TransferLink": "N6 requires function selection under unfamiliar conditions."
+        },
+        {
+          "classNo": 2,
+          "focus": "Sort, filter, chart, and presentation-media selection",
+          "targetSkill": "Choose the correct data presentation and output setup.",
+          "reasoningRequirement": "Explain why a chart type, sort/filter, or print setting is justified.",
+          "proofTask": "Inspect paper instructions and identify correct chart and output choices.",
+          "lmsExtensionTask": "Submit paper inspection checklist for chart/output decisions.",
+          "remediationRule": "Wrong media choice routes to scenario-to-output drills.",
+          "n6TransferLink": "N6 integrated tasks require correct media selection across applications."
+        },
+        {
+          "classNo": 3,
+          "focus": "Timed Excel PBQ",
+          "targetSkill": "Complete formulas, sort/filter, chart, and print settings under time pressure.",
+          "reasoningRequirement": "Plan sequence and verification before starting.",
+          "proofTask": "Complete a timed Excel PBQ and write a post-task error audit.",
+          "lmsExtensionTask": "System records Excel functions, references, sort/filter, print, and time leaks.",
+          "remediationRule": "Critical Excel leaks trigger targeted drills before mixed tasks.",
+          "n6TransferLink": "This becomes the N6 spreadsheet survival baseline."
+        }
+      ]
+    },
+    {
+      "week": 6,
+      "theme": "OneNote, file evidence, cross-application links, and practical evidence control",
+      "milestone": "Learners can keep evidence organized across applications.",
+      "sessions": [
+        {
+          "classNo": 1,
+          "focus": "OneNote and notebook workflow",
+          "targetSkill": "Capture notes, organize sections/pages, attach or link evidence, and retrieve it.",
+          "reasoningRequirement": "Explain why evidence must be retrievable, not just created.",
+          "proofTask": "Design a notebook structure on paper for a practical exam evidence trail.",
+          "lmsExtensionTask": "Complete notebook workflow reflection and evidence checklist.",
+          "remediationRule": "Weak notebook structure routes to evidence organization drills.",
+          "n6TransferLink": "N6 notebook workflow expects stable evidence control."
+        },
+        {
+          "classNo": 2,
+          "focus": "Cross-application evidence flow",
+          "targetSkill": "Move evidence between Word, Excel, OneNote, folders, and screenshots without losing context.",
+          "reasoningRequirement": "Explain why each artifact belongs in the evidence chain.",
+          "proofTask": "Map an integrated task from source file to final evidence upload.",
+          "lmsExtensionTask": "Submit cross-application evidence map.",
+          "remediationRule": "Evidence gaps route to file-control and verification discipline drills.",
+          "n6TransferLink": "N6 is mainly harder because integration pressure increases."
+        },
+        {
+          "classNo": 3,
+          "focus": "Evidence-control PBQ",
+          "targetSkill": "Complete a practical task and prove it with correct file, screenshot, and reflection evidence.",
+          "reasoningRequirement": "Identify final evidence before starting the practical work.",
+          "proofTask": "Timed integrated PBQ with final evidence upload checklist.",
+          "lmsExtensionTask": "System records notebook workflow, integration control, and screenshot evidence leaks.",
+          "remediationRule": "Missing evidence blocks readiness until corrected.",
+          "n6TransferLink": "N6 transfer depends on evidence traceability."
+        }
+      ]
+    },
+    {
+      "week": 7,
+      "theme": "Mixed PBQs, true/false correction scenarios, and unseen task interpretation",
+      "milestone": "Learners can transfer known skills into unfamiliar paper wording.",
+      "sessions": [
+        {
+          "classNo": 1,
+          "focus": "True/false correction theory",
+          "targetSkill": "Correct false statements using precise exam language.",
+          "reasoningRequirement": "Explain the correction, not only the true/false label.",
+          "proofTask": "Correct statements about formulas, formatting, page breaks, charts, file extensions, and print preview.",
+          "lmsExtensionTask": "Complete correction-based theory set.",
+          "remediationRule": "Thin corrections route to memory recall and theory explanation drills.",
+          "n6TransferLink": "N6 theory rewards precise correction and explanation."
+        },
+        {
+          "classNo": 2,
+          "focus": "Unseen PBQ interpretation",
+          "targetSkill": "Decode a new scenario into known application skills.",
+          "reasoningRequirement": "State app, command family, output, evidence, and trap risk.",
+          "proofTask": "Plan an unseen PBQ without executing it, then compare plan to memo logic.",
+          "lmsExtensionTask": "Submit unseen-paper planning checklist.",
+          "remediationRule": "Wrong app/command selection routes to paper inspection drills.",
+          "n6TransferLink": "Unseen interpretation is the N6 bridge skill."
+        },
+        {
+          "classNo": 3,
+          "focus": "Mixed timed PBQ",
+          "targetSkill": "Complete Word, Excel, OneNote, and file-control requirements in one task.",
+          "reasoningRequirement": "Use a planned sequence and verify all outputs.",
+          "proofTask": "Complete mixed PBQ and mark own result against rubric before lecturer review.",
+          "lmsExtensionTask": "System updates dominant leak profile and next intervention.",
+          "remediationRule": "Two repeated leaks become the next week's intervention focus.",
+          "n6TransferLink": "Mixed-task performance predicts N6 readiness better than isolated recall."
+        }
+      ]
+    },
+    {
+      "week": 8,
+      "theme": "Assignment/Test 1 readiness proof and remediation",
+      "milestone": "Learners know whether they can qualify and what must improve before the internal exam.",
+      "sessions": [
+        {
+          "classNo": 1,
+          "focus": "Assignment/Test 1 paper inspection",
+          "targetSkill": "Read mark allocation and plan time before solving.",
+          "reasoningRequirement": "Explain which tasks earn marks fastest and which need careful setup.",
+          "proofTask": "Annotate a paper with marks, order, risk, and verification points.",
+          "lmsExtensionTask": "Complete readiness planning checklist.",
+          "remediationRule": "Weak planning routes to time-discipline coaching.",
+          "n6TransferLink": "N6 papers punish weak planning more severely."
+        },
+        {
+          "classNo": 2,
+          "focus": "Readiness simulation",
+          "targetSkill": "Complete a controlled mini-paper with all evidence requirements.",
+          "reasoningRequirement": "Use the method: read, plan, execute, verify, submit.",
+          "proofTask": "Timed Assignment/Test 1 simulation with final self-mark.",
+          "lmsExtensionTask": "System calculates risk against 40 percent threshold and top remediation categories.",
+          "remediationRule": "Students below threshold get a targeted three-session intervention plan.",
+          "n6TransferLink": "Threshold risk now predicts future N6 support needs."
+        },
+        {
+          "classNo": 3,
+          "focus": "Correction conference and next path",
+          "targetSkill": "Turn mistakes into a targeted practice pathway.",
+          "reasoningRequirement": "Classify every error as recall, inspection, method, timing, or verification.",
+          "proofTask": "Complete correction log and commit to next LMS extension task.",
+          "lmsExtensionTask": "LMS assigns remediation and records metacognitive accuracy reflection.",
+          "remediationRule": "Learner must complete remediation before internal exam simulation.",
+          "n6TransferLink": "Correction habits become N6 self-regulation."
+        }
+      ]
+    },
+    {
+      "week": 9,
+      "theme": "Optional internal exam simulation and weak-group intervention",
+      "milestone": "At-risk students receive focused support without slowing strong students.",
+      "sessions": [
+        {
+          "classNo": 1,
+          "focus": "Weak-group intervention",
+          "targetSkill": "Target the two most repeated leak categories.",
+          "reasoningRequirement": "Explain the error pattern and the corrected method.",
+          "proofTask": "Complete targeted intervention PBQ.",
+          "lmsExtensionTask": "System assigns individualized remediation.",
+          "remediationRule": "Repeated critical leaks require lecturer release before next exam simulation.",
+          "n6TransferLink": "Weak N5 patterns become high-risk N6 blockers."
+        },
+        {
+          "classNo": 2,
+          "focus": "Strong-group acceleration",
+          "targetSkill": "Complete a harder mixed PBQ with unfamiliar data.",
+          "reasoningRequirement": "Transfer familiar method to unfamiliar surface details.",
+          "proofTask": "Complete advanced PBQ and explain transfer decisions.",
+          "lmsExtensionTask": "System records enrichment evidence.",
+          "remediationRule": "Strong students still correct any verification leaks.",
+          "n6TransferLink": "Acceleration prepares students for N6 complexity."
+        },
+        {
+          "classNo": 3,
+          "focus": "Internal exam simulation",
+          "targetSkill": "Sustain method, speed, and evidence control across a longer task.",
+          "reasoningRequirement": "Plan and verify without lecturer prompting.",
+          "proofTask": "Timed internal exam simulation.",
+          "lmsExtensionTask": "System updates readiness and predicted qualification risk.",
+          "remediationRule": "Simulation failures generate final intervention pack.",
+          "n6TransferLink": "Internal exam proof becomes N6 readiness evidence."
+        }
+      ]
+    },
+    {
+      "week": 10,
+      "theme": "Optional internal exam proof, metacognitive accuracy, and N6 bridge",
+      "milestone": "Learners can explain how N5 skills transfer into N6.",
+      "sessions": [
+        {
+          "classNo": 1,
+          "focus": "Metacognitive accuracy check",
+          "targetSkill": "Predict performance and compare it to actual evidence.",
+          "reasoningRequirement": "Explain why confidence was accurate or inaccurate.",
+          "proofTask": "Complete prediction, attempt, and reflection loop.",
+          "lmsExtensionTask": "LMS records confidence versus performance.",
+          "remediationRule": "Overconfidence with low marks routes to verification discipline.",
+          "n6TransferLink": "N6 success needs accurate self-monitoring."
+        },
+        {
+          "classNo": 2,
+          "focus": "N6 bridge task",
+          "targetSkill": "Apply N5 Word, Excel, OneNote, and file evidence habits to an N6-style integrated prompt.",
+          "reasoningRequirement": "Identify what is the same skill under a harder surface.",
+          "proofTask": "Complete a short N6-style transfer PBQ.",
+          "lmsExtensionTask": "System records transfer strengths and risks.",
+          "remediationRule": "Transfer failures map back to N5 skill remediation.",
+          "n6TransferLink": "This is the direct N5-to-N6 bridge."
+        },
+        {
+          "classNo": 3,
+          "focus": "Final readiness proof",
+          "targetSkill": "Prove readiness with method, evidence, correction, and reflection.",
+          "reasoningRequirement": "Defend final approach in learner-friendly language.",
+          "proofTask": "Submit final readiness pack: plan, attempt, evidence, correction log, and reflection.",
+          "lmsExtensionTask": "LMS locks readiness summary for lecturer review.",
+          "remediationRule": "Any unresolved critical leak becomes post-internal support.",
+          "n6TransferLink": "Readiness summary follows the learner into N6 support planning."
+        }
+      ]
+    }
+  ]
+}

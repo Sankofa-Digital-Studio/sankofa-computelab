@@ -1,0 +1,698 @@
+[
+  {
+    "id": "n5-word-styles",
+    "subjectCode": "n5",
+    "leak": "WORD_LAYOUT",
+    "topic": "N5 Word Layout",
+    "text": "Explain why heading styles are safer than manual bold-and-font-size formatting in a structured Word task.",
+    "answerPoints": [
+      {
+        "label": "styles carry structure",
+        "keywords": [
+          "style",
+          "structure"
+        ]
+      },
+      {
+        "label": "automatic features depend on styles",
+        "keywords": [
+          "automatic",
+          "toc",
+          "table of contents",
+          "navigation"
+        ]
+      },
+      {
+        "label": "manual formatting changes appearance only",
+        "keywords": [
+          "appearance",
+          "manual",
+          "format"
+        ]
+      }
+    ],
+    "explanation": "Styles carry structural meaning for items like navigation and automatic tables of contents, while manual formatting only changes appearance."
+  },
+  {
+    "id": "n5-word-merge",
+    "subjectCode": "n5",
+    "leak": "MAIL_MERGE",
+    "topic": "N5 Mail Merge",
+    "text": "Write the correct mail merge sequence from starting the main document to producing the merged output.",
+    "answerPoints": [
+      {
+        "label": "main document prepared",
+        "keywords": [
+          "main"
+        ]
+      },
+      {
+        "label": "data source connected",
+        "keywords": [
+          "data",
+          "source"
+        ]
+      },
+      {
+        "label": "merge fields inserted",
+        "keywords": [
+          "merge field",
+          "field"
+        ]
+      },
+      {
+        "label": "preview checked",
+        "keywords": [
+          "preview"
+        ]
+      },
+      {
+        "label": "final output completed",
+        "keywords": [
+          "finish",
+          "complete",
+          "merged output"
+        ]
+      }
+    ],
+    "explanation": "A stable merge sequence is: prepare the main document, connect the data source, insert merge fields, preview, then complete the merge output."
+  },
+  {
+    "id": "n5-excel-if",
+    "subjectCode": "n5",
+    "leak": "EXCEL_FUNCTIONS",
+    "topic": "N5 Spreadsheet Functions",
+    "text": "State when COUNTIF is more appropriate than SUM or AVERAGE in an exam spreadsheet task.",
+    "answerPoints": [
+      {
+        "label": "it counts items",
+        "keywords": [
+          "count"
+        ]
+      },
+      {
+        "label": "it uses a condition",
+        "keywords": [
+          "criteria",
+          "condition"
+        ]
+      },
+      {
+        "label": "it is not for totals or averages",
+        "keywords": [
+          "sum",
+          "average",
+          "not total"
+        ]
+      }
+    ],
+    "explanation": "COUNTIF is used when the task asks for the number of cells meeting a condition, not the total or average of values."
+  },
+  {
+    "id": "n5-excel-reference",
+    "subjectCode": "n5",
+    "leak": "EXCEL_REFERENCING",
+    "topic": "N5 References",
+    "text": "Why is `$F$1` safer than `F1` when a tax rate must remain fixed during copy-down?",
+    "answerPoints": [
+      {
+        "label": "absolute reference",
+        "keywords": [
+          "absolute",
+          "$f$1",
+          "fixed reference"
+        ]
+      },
+      {
+        "label": "locks the source cell",
+        "keywords": [
+          "lock",
+          "fixed"
+        ]
+      },
+      {
+        "label": "prevents drift during copy-down",
+        "keywords": [
+          "copy",
+          "drift",
+          "down"
+        ]
+      }
+    ],
+    "explanation": "An absolute reference locks the source cell so the copied formula keeps using the same rate instead of drifting row by row."
+  },
+  {
+    "id": "n5-sort-filter",
+    "subjectCode": "n5",
+    "leak": "SORT_FILTER",
+    "topic": "N5 Sort and Filter",
+    "text": "Which tab controls sorting and filtering in Excel, and why does that matter under timed conditions?",
+    "answerPoints": [
+      {
+        "label": "data tab named",
+        "keywords": [
+          "data"
+        ]
+      },
+      {
+        "label": "command location is known",
+        "keywords": [
+          "tab",
+          "command",
+          "location"
+        ]
+      },
+      {
+        "label": "saves time / reduces confusion",
+        "keywords": [
+          "time",
+          "quick",
+          "fast",
+          "confusion"
+        ]
+      }
+    ],
+    "explanation": "The Data tab controls sort and filter actions. Knowing the command location reduces wasted time and preventable menu confusion."
+  },
+  {
+    "id": "n5-print-output",
+    "subjectCode": "n5",
+    "leak": "PRINT_OUTPUT",
+    "topic": "N5 Output Control",
+    "text": "List two final checks a learner should do in Print Preview before submission.",
+    "answerPoints": [
+      {
+        "label": "orientation or page fit",
+        "keywords": [
+          "orientation",
+          "fit",
+          "landscape",
+          "portrait"
+        ]
+      },
+      {
+        "label": "margins or scaling",
+        "keywords": [
+          "margin",
+          "scaling",
+          "scale"
+        ]
+      },
+      {
+        "label": "correct content/pages visible",
+        "keywords": [
+          "page",
+          "content",
+          "visible",
+          "preview"
+        ]
+      }
+    ],
+    "explanation": "Print Preview should be used to confirm things like orientation, page fit, margins, scaling, and whether the correct content is visible."
+  },
+  {
+    "id": "n5-instruction",
+    "subjectCode": "n5",
+    "leak": "INSTRUCTION_CONTROL",
+    "topic": "N5 Instruction Control",
+    "text": "What is the difference between an instruction that says 'round to 2 decimals' and one that says 'display 2 decimals'?",
+    "answerPoints": [
+      {
+        "label": "round changes value",
+        "keywords": [
+          "round",
+          "value",
+          "stored"
+        ]
+      },
+      {
+        "label": "display changes appearance",
+        "keywords": [
+          "display",
+          "format",
+          "appearance"
+        ]
+      },
+      {
+        "label": "they are not the same",
+        "keywords": [
+          "different",
+          "not same"
+        ]
+      }
+    ],
+    "explanation": "Rounding changes the stored numeric result, while display formatting changes only how the value appears on screen or paper."
+  },
+  {
+    "id": "n5-time",
+    "subjectCode": "n5",
+    "leak": "TIME_DISCIPLINE",
+    "topic": "N5 Exam Discipline",
+    "text": "Write the enforced four-step intervention routine used to protect marks under time pressure.",
+    "answerPoints": [
+      {
+        "label": "read",
+        "keywords": [
+          "read"
+        ]
+      },
+      {
+        "label": "plan",
+        "keywords": [
+          "plan"
+        ]
+      },
+      {
+        "label": "execute",
+        "keywords": [
+          "execute",
+          "do"
+        ]
+      },
+      {
+        "label": "verify",
+        "keywords": [
+          "verify",
+          "check"
+        ]
+      }
+    ],
+    "explanation": "The routine is read, plan, execute, verify. It exists to stop panic, random clicking, and unverified submission."
+  },
+  {
+    "id": "n5-notebook",
+    "subjectCode": "n5",
+    "leak": "NOTEBOOK_WORKFLOW",
+    "topic": "N5 Notebook Workflow",
+    "text": "Why can weak notebook organisation reduce marks even if some content is correct?",
+    "answerPoints": [
+      {
+        "label": "evidence can be lost",
+        "keywords": [
+          "evidence"
+        ]
+      },
+      {
+        "label": "workflow/sequence breaks",
+        "keywords": [
+          "workflow",
+          "sequence",
+          "organisation"
+        ]
+      },
+      {
+        "label": "later tasks are affected",
+        "keywords": [
+          "later",
+          "task",
+          "reuse",
+          "retrieve"
+        ]
+      }
+    ],
+    "explanation": "Notebook organisation affects whether the learner can capture, retrieve, and reuse the required evidence and outputs across linked tasks."
+  },
+  {
+    "id": "n5-integration",
+    "subjectCode": "n5",
+    "leak": "INTEGRATION_CONTROL",
+    "topic": "N5 Integration",
+    "text": "State why saving one subtask output in the wrong folder can damage marks in a later integrated section.",
+    "answerPoints": [
+      {
+        "label": "tasks are linked",
+        "keywords": [
+          "linked",
+          "integration"
+        ]
+      },
+      {
+        "label": "later step needs the output",
+        "keywords": [
+          "later",
+          "next",
+          "task",
+          "output"
+        ]
+      },
+      {
+        "label": "wrong path/folder breaks the chain",
+        "keywords": [
+          "folder",
+          "path",
+          "wrong place"
+        ]
+      }
+    ],
+    "explanation": "Integration tasks depend on the correct output being available in the correct place for the next instruction in the chain."
+  },
+  {
+    "id": "n6-comms",
+    "subjectCode": "n6",
+    "leak": "COMMUNICATION_THEORY",
+    "topic": "N6 Communication Theory",
+    "text": "Differentiate between synchronous and asynchronous communication in one sentence each.",
+    "answerPoints": [
+      {
+        "label": "synchronous is real-time",
+        "keywords": [
+          "synchronous",
+          "real-time",
+          "live"
+        ]
+      },
+      {
+        "label": "asynchronous is delayed",
+        "keywords": [
+          "asynchronous",
+          "later",
+          "delayed"
+        ]
+      }
+    ],
+    "explanation": "Synchronous communication happens live in the same session. Asynchronous communication allows replies at different times."
+  },
+  {
+    "id": "n6-cloud",
+    "subjectCode": "n6",
+    "leak": "CLOUD_COLLAB",
+    "topic": "N6 Cloud Collaboration",
+    "text": "What is the first setting that must be checked before a shared cloud notebook can work correctly for a partner?",
+    "answerPoints": [
+      {
+        "label": "permissions/access rights",
+        "keywords": [
+          "permission",
+          "access",
+          "rights"
+        ]
+      },
+      {
+        "label": "sharing setup",
+        "keywords": [
+          "share",
+          "shared"
+        ]
+      }
+    ],
+    "explanation": "The first check is permissions or access rights. If those are wrong, the collaboration workflow fails immediately."
+  },
+  {
+    "id": "n6-notebook",
+    "subjectCode": "n6",
+    "leak": "NOTEBOOK_WORKFLOW",
+    "topic": "N6 Notebook Workflow",
+    "text": "Explain why notebook organisation is treated as workflow control rather than just neatness in N6.",
+    "answerPoints": [
+      {
+        "label": "evidence/notes must be retrievable",
+        "keywords": [
+          "evidence",
+          "retrieve",
+          "find"
+        ]
+      },
+      {
+        "label": "sequence matters",
+        "keywords": [
+          "sequence",
+          "workflow",
+          "organisation"
+        ]
+      },
+      {
+        "label": "later tasks depend on it",
+        "keywords": [
+          "later",
+          "task",
+          "reuse"
+        ]
+      }
+    ],
+    "explanation": "Notebook work affects whether evidence, notes, and later task outputs can be found and reused correctly under pressure."
+  },
+  {
+    "id": "n6-explanation",
+    "subjectCode": "n6",
+    "leak": "THEORY_EXPLANATION",
+    "topic": "N6 Theory Explanation",
+    "text": "Why do one-word answers often lose marks in N6 theory even when the learner knows the topic?",
+    "answerPoints": [
+      {
+        "label": "explanation is required",
+        "keywords": [
+          "explain",
+          "detail",
+          "full sentence",
+          "sentence"
+        ]
+      },
+      {
+        "label": "terminology matters",
+        "keywords": [
+          "terminology",
+          "terms",
+          "technical"
+        ]
+      },
+      {
+        "label": "one word is incomplete",
+        "keywords": [
+          "one-word",
+          "incomplete",
+          "too short"
+        ]
+      }
+    ],
+    "explanation": "N6 theory often rewards explanation quality, accurate terminology, and complete meaning, not just a familiar word."
+  },
+  {
+    "id": "n6-screenshot",
+    "subjectCode": "n6",
+    "leak": "SCREENSHOT_EVIDENCE",
+    "topic": "N6 Evidence Control",
+    "text": "Why is naming and storing screenshots correctly part of assessment quality rather than an optional admin step?",
+    "answerPoints": [
+      {
+        "label": "they are evidence",
+        "keywords": [
+          "evidence"
+        ]
+      },
+      {
+        "label": "they must be identifiable",
+        "keywords": [
+          "identify",
+          "name",
+          "label"
+        ]
+      },
+      {
+        "label": "they must be reusable/stored correctly",
+        "keywords": [
+          "reuse",
+          "file",
+          "store",
+          "workflow"
+        ]
+      }
+    ],
+    "explanation": "Evidence is only useful if it can be identified, stored, and reused correctly when the task chain or lecturer review needs it."
+  },
+  {
+    "id": "n6-database-logic",
+    "subjectCode": "n6",
+    "leak": "DATABASE_LOGIC",
+    "topic": "N6 Database Logic",
+    "text": "Why is explaining query logic important instead of only clicking until the right-looking output appears?",
+    "answerPoints": [
+      {
+        "label": "logic/criteria matter",
+        "keywords": [
+          "logic",
+          "criteria",
+          "condition"
+        ]
+      },
+      {
+        "label": "why the output appears matters",
+        "keywords": [
+          "why",
+          "output",
+          "result"
+        ]
+      },
+      {
+        "label": "guessing is unstable",
+        "keywords": [
+          "guess",
+          "menu",
+          "not reliable"
+        ]
+      }
+    ],
+    "explanation": "Database marks are more stable when the learner understands the criteria and logic behind the output instead of guessing through menus."
+  },
+  {
+    "id": "n6-integration",
+    "subjectCode": "n6",
+    "leak": "INTEGRATION_CONTROL",
+    "topic": "N6 Integration Control",
+    "text": "What is the main risk when a learner treats linked tasks as isolated pieces in a full workflow paper?",
+    "answerPoints": [
+      {
+        "label": "tasks are linked",
+        "keywords": [
+          "linked",
+          "workflow"
+        ]
+      },
+      {
+        "label": "failure can cascade",
+        "keywords": [
+          "cascade",
+          "chain",
+          "later"
+        ]
+      },
+      {
+        "label": "later outputs can break",
+        "keywords": [
+          "output",
+          "missing",
+          "unusable"
+        ]
+      }
+    ],
+    "explanation": "Linked tasks can collapse when an earlier output is missing, wrong, or unusable by a later step."
+  },
+  {
+    "id": "n6-output",
+    "subjectCode": "n6",
+    "leak": "PRINT_OUTPUT",
+    "topic": "N6 Output Verification",
+    "text": "Why should chart and page-layout checks still happen after the main calculations are correct?",
+    "answerPoints": [
+      {
+        "label": "output still carries marks",
+        "keywords": [
+          "output",
+          "marks"
+        ]
+      },
+      {
+        "label": "layout/chart readability matters",
+        "keywords": [
+          "layout",
+          "chart",
+          "readable",
+          "presentation"
+        ]
+      },
+      {
+        "label": "verification prevents final loss",
+        "keywords": [
+          "verify",
+          "check",
+          "print"
+        ]
+      }
+    ],
+    "explanation": "Advanced practical work still loses marks through unreadable output, weak chart presentation, and unchecked print layout."
+  },
+  {
+    "id": "n5-diagnostic-repair-1",
+    "subjectCode": "n5",
+    "leak": "RIBBON_NAV",
+    "topic": "Word command selection",
+    "text": "Your report needs one landscape page within a portrait document. How do you change just that page and verify the result?",
+    "explanation": "Isolate the page with section breaks, set that section to landscape under Layout, then check the surrounding pages in Print Preview.",
+    "answerPoints": [
+      {
+        "label": "Isolate the page in its own section"
+      },
+      {
+        "label": "Set orientation for that section"
+      },
+      {
+        "label": "Verify the neighbouring pages"
+      }
+    ]
+  },
+  {
+    "id": "n5-diagnostic-repair-2",
+    "subjectCode": "n5",
+    "leak": "THEORY_RECALL",
+    "topic": "Information processing cycle",
+    "text": "Use a campus attendance spreadsheet to explain input, processing, output and storage.",
+    "explanation": "Names and attendance codes are input. A formula counts absences as processing. The resulting attendance summary is output. Saving the workbook preserves it as storage.",
+    "answerPoints": [
+      {
+        "label": "Identify input data"
+      },
+      {
+        "label": "Describe the operation on the data"
+      },
+      {
+        "label": "Distinguish the output from saved data"
+      }
+    ]
+  },
+  {
+    "id": "n5-diagnostic-repair-3",
+    "subjectCode": "n5",
+    "leak": "FILE_MGMT",
+    "topic": "File control",
+    "text": "Save your finished report as REPORT_1 in the exam folder and keep the original. How do you prove both copies are correct?",
+    "explanation": "Save As into the specified folder with the required name and file type. Verify the original remains and reopen the submitted copy from the exam folder.",
+    "answerPoints": [
+      {
+        "label": "Use Save As to preserve the original"
+      },
+      {
+        "label": "Match folder, filename and file type"
+      },
+      {
+        "label": "Reopen the correct saved copy"
+      }
+    ]
+  },
+  {
+    "id": "n6-diagnostic-repair-4",
+    "subjectCode": "n6",
+    "leak": "TIME_DISCIPLINE",
+    "topic": "Time planning",
+    "text": "You have 40 minutes, a 24-mark spreadsheet, and a 16-mark report. The report uses a chart from the spreadsheet. Plan a sequence and a recovery checkpoint.",
+    "explanation": "Allow time to inspect instructions and verify output. Build and check the chart early because the report depends on it. Set a checkpoint to move on when additional spreadsheet work threatens the remaining report marks.",
+    "answerPoints": [
+      {
+        "label": "Budget time for inspection and verification"
+      },
+      {
+        "label": "Prioritise the chart dependency"
+      },
+      {
+        "label": "Set a specific checkpoint and recovery action"
+      }
+    ]
+  },
+  {
+    "id": "n6-diagnostic-repair-5",
+    "subjectCode": "n6",
+    "leak": "INSTRUCTION_CONTROL",
+    "topic": "Instruction control",
+    "text": "The task says to display a result to two decimal places, then use ROUND in a separate calculation. Explain what each instruction changes and how to verify it.",
+    "explanation": "Number formatting changes the display while keeping the underlying value. ROUND changes the value returned by the formula. Check the formula bar and compare the two values in a later calculation.",
+    "answerPoints": [
+      {
+        "label": "Distinguish display formatting from returned value"
+      },
+      {
+        "label": "Use the method requested in each instruction"
+      },
+      {
+        "label": "Verify with the underlying formula or a dependent calculation"
+      }
+    ]
+  }
+]
