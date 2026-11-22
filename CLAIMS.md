@@ -11,7 +11,11 @@ This first hourglass pass starts with six broad learner promises, narrows them t
 | Lecturer review | Feedback identifies the same-device message boundary | Product approver to confirm support arrangements |
 | Notifications | College Notices identifies local device testing and the live delivery dependency | Product approver to confirm delivery scope |
 
-The production preview opened all six destinations from the disclosure. This checks navigation and discoverability. Submission, persistence and lecturer review require their own end-to-end evidence. Sign-off and site-wide point-of-use copy review remain open.
+The production preview opened all six destinations from the disclosure. This checks navigation and discoverability. Submission, persistence and lecturer review require their own end-to-end evidence. Curriculum sign-off and site-wide point-of-use copy review remain open.
+
+## Approval ownership
+
+OhhttooeeXCIV is the designated product and teaching approver for the six claims above, N5 curriculum coverage and reuse decisions. This records the owner designation. Curriculum validation, asset-level reuse decisions and approval of claim wording are pending.
 
 ## Component library candidates
 
