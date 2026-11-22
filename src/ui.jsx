@@ -1,4 +1,6 @@
 import React from 'react'
+import { CapabilityDisclosure } from './CapabilityDisclosure.jsx'
+import { capabilities } from './capabilities.js'
 import { Route, ArrowRight, ArrowUpRight, BookMarked, BookOpen, Bookmark, ChartNoAxesColumnIncreasing, CircleHelp, ClipboardList, FileText, GraduationCap, Layers3, LayoutGrid, NotebookPen, Table2, Target, Timer, FileCheck2 } from 'lucide-react'
 
 export const appIcons = {Theory:BookOpen, OneNote:NotebookPen, Word:FileText, Excel:Table2, Integrated:Layers3}
@@ -31,6 +33,7 @@ export function Dashboard({state,onNav,onPractice,questions,course,setCourse,cou
     <Header eyebrow="STUDENT WORKSPACE" title="Computer Practice workspace" description="Build practical computer skills for N5 and N6, then test them under exam conditions.">
       <Select label="Active course" value={course} onChange={setCourse} options={courses}/>
     </Header>
+    <CapabilityDisclosure label="What this workspace supports" items={capabilities}/>
     <section className="hero">
       <div className="hero-copy">
         <div className="hero-kicker"><GraduationCap size={16}/> EXAM PREPARATION</div>
