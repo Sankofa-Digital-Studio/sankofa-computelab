@@ -46,3 +46,8 @@ Nine original scenarios cover Computer Practice N5 and N6. The N5 careers clinic
 ## Source review
 
 The N5 theory first pass supports the field guide and short drills. The assignment bundle is labelled Assignment 1 externally while its student paper and README say Assignment 2. The rehearsal uses its independent verification and mail merge teaching patterns without relying on its numbering. The Test 1 pack informs the five-strand N5 rehearsal; its candidate variants, addenda, memos and lecturer documents are excluded. The N6 Formula Logic PDF is available as a study guide. The longer 300-mark mastery draft includes embedded data tables and calls for additional working files and templates. The two N6 mastery labs use new inputs and do not represent the complete assessment.
+## 1.1.0-rc.1 classroom preview
+
+The overview now explains six learner-facing capabilities and opens the active course diagnostic at the appropriate step. Draft answers and diagnostic feedback are stored in the current browser profile. See [the claims register](CLAIMS.md) for evidence and approval ownership.
+
+This release candidate is for local formative practice. Production cohort access, shared records, moderated marking, recovery drills and end-to-end classroom acceptance are tracked in the [P0 project](https://github.com/orgs/Sankofa-Digital-Studio/projects/5).
