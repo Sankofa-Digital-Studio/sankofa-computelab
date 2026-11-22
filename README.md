@@ -51,3 +51,5 @@ The N5 theory first pass supports the field guide and short drills. The assignme
 The overview now explains six learner-facing capabilities and opens the active course diagnostic at the appropriate step. Draft answers and diagnostic feedback are stored in the current browser profile. See [the claims register](CLAIMS.md) for evidence and approval ownership.
 
 This release candidate is for local formative practice. Production cohort access, shared records, moderated marking, recovery drills and end-to-end classroom acceptance are tracked in the [P0 project](https://github.com/orgs/Sankofa-Digital-Studio/projects/5).
+
+The [N5 lecturer guide](N5-LECTURER-GATE.md) covers the first pathway gate. Exported learning reviews include course, diagnostic submission status and completed proof count. Free-text reflections, attachments and confidence ratings stay outside this export.
