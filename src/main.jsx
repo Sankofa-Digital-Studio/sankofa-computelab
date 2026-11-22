@@ -70,7 +70,7 @@ function App(){
     library:<Library key={course} {...shared} setCourse={chooseCourse}/>,
     practice:<Practice key={course} {...shared} tab={tab} setTab={setTab} app={app} setApp={setApp} commit={commit}/>,
     challenges:<ChallengeLab {...shared} selected={selectedChallenge} choose={chooseChallenge}/>,
-    learning:<Learning key={course} {...shared} onNav={go}/>,
+    learning:<Learning key={course + selectedChallenge} initialTab={selectedChallenge === 'diagnose' ? 'diagnose' : 'path'} {...shared} onNav={go}/>,
     progress:<Progress {...shared} openPractice={openPractice} openChallenge={chooseChallenge}/>,
     assignments:<Assignments {...shared}/>,
     feedback:<Feedback {...shared}/>,
