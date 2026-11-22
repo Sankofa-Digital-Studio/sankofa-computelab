@@ -2,7 +2,7 @@
 
 ## Reporting a security concern
 
-Keep vulnerability details, credentials, student information, and confidential assessment content out of public issues, pull requests, and discussions. Use the repository's private reporting option in the Security tab if available. If it is unavailable, ask a maintainer through an established private channel how to submit a report securely before sharing details.
+Keep vulnerability details, credentials, student information, and confidential assessment content out of public issues, pull requests, and discussions. [Report a vulnerability privately](https://github.com/Sankofa-Digital-Studio/sankofa-computelab/security/advisories/new) through GitHub. If you cannot access the form, ask a maintainer through an established private channel how to submit a report securely before sharing details.
 
 Include the affected version, the role and feature affected, impact, and concise reproduction evidence using synthetic records. Redact student information and any secrets before sharing.
 
