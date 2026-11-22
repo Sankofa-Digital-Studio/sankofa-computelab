@@ -3,6 +3,7 @@ import {ArrowRight,CheckCircle2,Download,Route,Target} from 'lucide-react'
 import {Header} from './ui'
 import pathway from './pathway-data.json'
 import {diagnostics,labels,diagnosticResult,recommendedRepairs,proofComplete,repairComplete,marksPlan} from './learning-model'
+import {learningReview} from './learning-review.js'
 import {saveFile,downloadFile} from './files'
 
 const n6Path=[
@@ -24,7 +25,7 @@ export function Learning({course,state,update,notify,onNav,initialTab}){
  const [tab,setTab]=useState(initialTab),[stage,setStage]=useState(1),[session,setSession]=useState(1),[busy,setBusy]=useState(false)
  const data=state.learning?.[course]||{}
  const set=fn=>update(s=>({...s,learning:{...s.learning,[course]:fn(s.learning?.[course]||{})}}))
- const run=data.run||{answers:{},confidence:{}}
+ const run={...data.run,answers:data.run?.answers??{},confidence:data.run?.confidence??{}}
  const result=diagnosticResult(course,run)
  const weeks=course==='cpn5'?pathway.weeks:n6Path
  const week=weeks.find(w=>w.week===stage)||weeks[0]
@@ -36,7 +37,7 @@ export function Learning({course,state,update,notify,onNav,initialTab}){
  const drills=recommendedRepairs(course,run)
  const complete=Object.values(data.proofs||{}).filter(p=>p.completed).length
  function exportReview(){
-  const content=`Sankofa ComputeLab · ${course.toUpperCase()} learning evidence\nRepository source: Edu_Labs_Computer_Mastery @ 9270edff8e0e17ce08c89a3ef2629e94411356bb\nLocal self-recorded practice; lecturer review pending.\n\n`+JSON.stringify(data,null,2)
+  const content=learningReview(course,data)
   const url=URL.createObjectURL(new Blob([content],{type:'text/plain'}));const a=document.createElement('a');a.href=url;a.download=`ComputeLab-${course}-learning-review.txt`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)
  }
  return <>
