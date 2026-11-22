@@ -1,4 +1,5 @@
 import React from 'react'
+import { diagnosticAction } from './diagnostic-action.js'
 import { CapabilityDisclosure } from './CapabilityDisclosure.jsx'
 import { capabilities } from './capabilities.js'
 import { Route, ArrowRight, ArrowUpRight, BookMarked, BookOpen, Bookmark, ChartNoAxesColumnIncreasing, CircleHelp, ClipboardList, FileText, GraduationCap, Layers3, LayoutGrid, NotebookPen, Table2, Target, Timer, FileCheck2 } from 'lucide-react'
@@ -39,7 +40,7 @@ export function Dashboard({state,onNav,onPractice,questions,course,setCourse,cou
         <div className="hero-kicker"><GraduationCap size={16}/> EXAM PREPARATION</div>
         <h2>{courses.find(c=>c.id===course)?.title}</h2>
         <p>Build your answer, check the evidence and apply the skill when the facts change.</p>
-        <div className="hero-actions"><button className="btn accent" onClick={()=>onNav('challenges')}>Enter Challenge Lab <ArrowRight size={17}/></button>{count>0&&<button className="btn hero-secondary" onClick={()=>onNav('library')}>Browse study materials <ArrowUpRight size={16}/></button>}</div>
+        <div className="hero-actions"><a className="btn accent" href="#learning/diagnose">{diagnosticAction(state.learning?.[course]?.run)} <ArrowRight size={17}/></a>{count>0&&<button className="btn hero-secondary" onClick={()=>onNav('library')}>Browse study materials <ArrowUpRight size={16}/></button>}</div>
       </div>
       <div className="hero-art" aria-hidden="true"><div className="orbit first"/><div className="orbit second"/><div className="art-grid"/><div className="art-book"><BookOpen size={82} strokeWidth={1.12}/></div><span className="art-chip chip-sheet"><Table2 size={26}/></span><span className="art-chip chip-quiz"><FileCheck2 size={25}/></span><span className="art-star star-one">✦</span><span className="art-star star-two">✧</span><span className="art-dot"/></div>
     </section>

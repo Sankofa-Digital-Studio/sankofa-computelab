@@ -20,8 +20,8 @@ const n6Path=[
   {focus:'Recovery and changed facts',targetSkill:'Repair the first cause of an error and retry under new conditions.',reasoningRequirement:'Explain why the fix works when the data changes.',proofTask:'Reattempt the weakest task with new figures. Record the method, checks and any remaining uncertainty.',n6TransferLink:'Prepare an evidence summary for lecturer review.'}]}
 ]
 function Text({label,value,onChange}){return <label className="field"><span>{label}</span><textarea value={value||''} onChange={e=>onChange(e.target.value)}/></label>}
-export function Learning({course,state,update,notify,onNav}){
- const [tab,setTab]=useState('path'),[stage,setStage]=useState(1),[session,setSession]=useState(1),[busy,setBusy]=useState(false)
+export function Learning({course,state,update,notify,onNav,initialTab}){
+ const [tab,setTab]=useState(initialTab),[stage,setStage]=useState(1),[session,setSession]=useState(1),[busy,setBusy]=useState(false)
  const data=state.learning?.[course]||{}
  const set=fn=>update(s=>({...s,learning:{...s.learning,[course]:fn(s.learning?.[course]||{})}}))
  const run=data.run||{answers:{},confidence:{}}
