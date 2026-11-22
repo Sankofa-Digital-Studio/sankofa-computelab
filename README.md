@@ -2,6 +2,23 @@
 
 Mobile-first Vite + React PWA for Computer Practice N5 and N6.
 
+## Capabilities and readiness
+
+| Capability | Repository baseline |
+| --- | --- |
+| N5 and N6 practice | Level-specific study content and formative exercises. Coverage varies by topic. |
+| Automated marking | The built-in timed quiz is automatically marked. Practical activities and mock exams use self-marking. |
+| Practical evidence and progress | The current browser profile stores progress and evidence. Cross-device or shared lecturer access requires backend integration. |
+| Lecturer controls | Demo administration and learner records share a browser profile. Cohort permissions and secure answer release are pilot requirements. |
+| Offline study | Cache the study shell with one online visit and download selected resources in advance. |
+| Notifications | Local notification testing is supported. Live push delivery requires integration. |
+
+The 2027 pilot targets one existing N5 gate with a diagnostic, targeted practice, lecturer review, and fresh reassessment. See the [production backlog](https://github.com/orgs/Sankofa-Digital-Studio/projects/5) for planned work.
+
+## Contributing and reporting
+
+See [CONTRIBUTING.md](CONTRIBUTING.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), and [SECURITY.md](SECURITY.md).
+
 ## Development
 
 ```sh
