@@ -31,7 +31,11 @@ export function Dashboard({state,onNav,onPractice,questions,course,setCourse,cou
     [ClipboardList,'blue','Mock exams','Rehearse whole sections or create your own mock.',()=>onPractice('mocks')]
   ]
   const toolActions = course === 'cpn5'
-    ? [[ShieldCheck,'mint','N5 Gate 01','Locked 50-minute gate, leak profile, recovery drills & submission.',()=>onNav('n5-gate')], ...actions]
+    ? [
+        [ShieldCheck,'mint','N5 Gate 01','Locked 50-minute gate, leak profile, recovery drills & submission.',()=>onNav('n5-gate')],
+        [Layers3,'blue','Topic 1 Hub','Sections 1–8 concepts, CBT traps, Quick Checks & practical evidence.',()=>onNav('topic-1')],
+        ...actions
+      ]
     : actions
   return <>
     <Header eyebrow="STUDENT WORKSPACE" title="Computer Practice workspace" description="Build practical computer skills for N5 and N6, then test them under exam conditions.">
@@ -53,7 +57,10 @@ export function Dashboard({state,onNav,onPractice,questions,course,setCourse,cou
         <h3>Complete the full 6-stage N5 Gate 01 cycle</h3>
         <p>Sign in with your cohort number, complete the 50-minute locked gate, review your rubric &amp; leak profile, finish targeted drills and submit your verification packet.</p>
       </div>
-      <a className="btn primary" href="#n5-gate" onClick={e=>{e.preventDefault();onNav('n5-gate')}}>Open N5 Gate 01 (Auth → Submission) <ArrowRight size={16}/></a>
+      <div className="button-row">
+        <a className="btn primary" href="#n5-gate" onClick={e=>{e.preventDefault();onNav('n5-gate')}}>Open N5 Gate 01 (Auth → Submission) <ArrowRight size={16}/></a>
+        <a className="btn outline" href="#topic-1" onClick={e=>{e.preventDefault();onNav('topic-1')}}>Open Topic 1 Modules (Sections 1–8) <ArrowRight size={16}/></a>
+      </div>
     </section>}
     <div className="dashboard-body">
       <section>

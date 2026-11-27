@@ -65,3 +65,10 @@ The `#n5-gate` workspace implements one focused N5 gate—**Gate 01 · Ribbon & 
 5. **Fresh Reassessment & Sealed Submission**: Verifies transfer on 3 unseen questions (for leak recovery paths) and seals a timestamped submission receipt (`N5G1-...`) with a SHA-256 digest and downloadable `.txt` / `.json` handoff files.
 
 All Gate 01 auth credentials, attempts, and receipts are stored locally in the browser (`localStorage` + `IndexedDB`) for offline-capable student use and receipt handoff; multi-device cohort sync requires a backend integration.
+
+## Topic 1 Hub (`#topic-1`)
+
+The `#topic-1` workspace provides structured N5 Topic 1 learning and practical evidence modules across all 13 sections (`1`, `2`, `3`, `4A`, `4B`, `4C`, `5`, `6A`, `6B`, `6C`, `7A`, `7B` Wave 1 + `8` Consolidation):
+
+- **5-Block Lesson Flow**: Concept & CBT Exam Trap tip, High-Risk Contrasts table, Guided Worked Example, interactive 3-item Quick Check (39 total questions with rationale review), and Practical Evidence Task with IndexedDB file attachments.
+- **Student Session Sync & Export**: Scopes progress to the active N5 Gate student session (or `local-learner`) and exports a plain-text Topic 1 evidence summary.
