@@ -28,6 +28,7 @@ import {
   getGateStage,
   getOrCreateDeviceId,
   getRecoveryDrillsForLeaks,
+  hasZeroLeaks,
   initialStudentRecord,
   isGateExpired,
   isRecoveryComplete,
@@ -317,8 +318,8 @@ test('full Gate workflow: diagnostics, recovery enforcement, reassessment, and t
   assert.equal(drills.length, 2)
   assert.equal(isRecoveryComplete(record, drills), false)
 
-  // 100%-score learners still get 1 consolidation drill
-  assert.equal(getRecoveryDrillsForLeaks([]).length, 1)
+  // 100%-score learners need 0 recovery drills
+  assert.equal(getRecoveryDrillsForLeaks([]).length, 0)
 
   // Complete drills partially -> still incomplete
   for (const drill of drills) {
@@ -371,4 +372,40 @@ test('full Gate workflow: diagnostics, recovery enforcement, reassessment, and t
   assert.match(receipt, /Reassessment Score: 3\/3/)
   assert.match(receipt, /Campus-Plan\.docx/)
   assert.ok(!receipt.includes('Sankofa2026'))
+})
+
+test('100% Gate score bypasses targeted recovery and reassessment straight to final submission', async () => {
+  const session = {
+    studentCode: 'N5-103',
+    allocatedNumber: '103',
+    firstName: 'Amina',
+    lastName: 'Patel',
+    deviceId: 'device-test-100',
+    signedInAt: 1_700_000_000_000,
+  }
+
+  let record = initialStudentRecord()
+  const t0 = 1_700_000_005_000
+  record = startLockedGate(record, t0)
+  for (const q of GATE_QUESTIONS) {
+    record = recordGateAnswer(record, q.id, q.correctIndex, t0 + 5000)
+  }
+
+  record = submitLockedGate(record, t0 + 90_000)
+  assert.equal(record.result.score, 100)
+  assert.equal(record.result.percent, 100)
+  assert.deepEqual(record.result.recommendedLeaks, [])
+  assert.equal(hasZeroLeaks(record), true)
+  assert.equal(getGateStage(session, record), 'diagnostics')
+  assert.equal(isRecoveryComplete(record, getRecoveryDrillsForLeaks([])), true)
+
+  // Acknowledging diagnostics goes straight to final_review (skipping recovery & reassessment)
+  record = acknowledgeDiagnostics(record, t0 + 95_000)
+  assert.equal(getGateStage(session, record), 'final_review')
+
+  record = await finalizeGateSubmission(session, record, t0 + 100_000)
+  assert.equal(getGateStage(session, record), 'submitted')
+  assert.equal(record.finalSubmission.recoveryExempt, true)
+  assert.equal(record.finalSubmission.reassessmentScore, 'Exempt (100% Gate score)')
+  assert.match(formatSubmissionReceiptText(record.finalSubmission), /Exempt \(100% Gate score\)/)
 })

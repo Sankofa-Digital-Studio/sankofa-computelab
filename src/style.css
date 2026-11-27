@@ -586,6 +586,7 @@ main{max-width:1440px;margin:auto;padding:23px 16px 88px;outline:none}
   display: grid;
   gap: 10px;
   min-width: 0;
+  scroll-margin-top: 145px;
 }
 .n5g-question-head {
   display: flex;
@@ -617,6 +618,7 @@ main{max-width:1440px;margin:auto;padding:23px 16px 88px;outline:none}
   font-size: .86rem;
   line-height: 1.45;
   cursor: pointer;
+  scroll-margin-top: 145px;
 }
 .n5g-option:hover {
   border-color: #a9c4ab;

@@ -118,8 +118,32 @@ try {
   await page.getByRole('button', { name: /Verify & Continue/i }).click()
   await page.getByRole('heading', { name: /N5 Gate 01 Submitted & Locked/i }).waitFor()
 
+  // 10. Verify 100% score bypasses Targeted Recovery & Reassessment (using N5-102)
+  await page.getByRole('button', { name: /Clear lock \/ Sign out/i }).click()
+  await page.getByRole('button', { name: /N5-102 · Thabo Ndlovu/i }).click()
+  await page.getByRole('button', { name: /Verify & Continue/i }).click()
+  await page.getByLabel('New private passphrase').fill('Sankofa2026')
+  await page.getByLabel('Confirm passphrase').fill('Sankofa2026')
+  await page.getByRole('button', { name: /Save Passphrase & Lock Session/i }).click()
+  await page.getByRole('button', { name: /Start Locked Gate 01/i }).click()
+
+  const cards100 = page.locator('article.n5g-question-card')
+  // In GATE_QUESTIONS: Q1 is index 1, Q3 is index 1, all others are index 0
+  for (let i = 0; i < 12; i += 1) {
+    const pick = i === 0 || i === 2 ? 1 : 0
+    await cards100.nth(i).locator('input[type="radio"]').nth(pick).check()
+  }
+  await page.getByRole('button', { name: /Lock & Submit Gate 01/i }).click()
+  await page.getByText(/100% Mastery — Zero skill leaks detected/i).waitFor()
+  await page.getByRole('button', { name: /Proceed to Final Submission/i }).click()
+  await page.getByRole('heading', { name: /Ready to seal N5 Gate 01/i }).waitFor()
+  await page.getByRole('button', { name: /Submit N5 Gate 01/i }).click()
+  await page.getByRole('heading', { name: /N5 Gate 01 Submitted & Locked/i }).waitFor()
+  const receipt100 = await page.locator('.n5g-receipt-card').innerText()
+  assert.match(receipt100, /Exempt \(100% Gate score\)/)
+
   assert.deepEqual(pageErrors, [], 'Expected zero uncaught page errors')
-  console.log('PASS: Full N5 Gate 01 Auth -> Submission -> Re-auth cycle verified at 390x844')
+  console.log('PASS: Full N5 Gate 01 (<100% recovery + 100% direct bypass) verified at 390x844')
 } finally {
   await browser?.close()
   await server.close()

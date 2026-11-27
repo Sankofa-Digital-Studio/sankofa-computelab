@@ -60,8 +60,8 @@ The `#n5-gate` workspace implements one focused N5 gate—**Gate 01 · Ribbon & 
 
 1. **Student Auth & Device Lock**: Claim a rostered N5 seat (`N5-101`–`N5-105`) or register a candidate number, set a personal passphrase (PBKDF2/SHA-256 salted hash via WebCrypto), and lock the local session.
 2. **Gate Briefing & Locked 50-Minute Timer**: Start the 12-question (100-mark) Gate 01 attempt with a persistent deadline that survives page refreshes and auto-submits on expiry.
-3. **Rubric Scoring & Leak Profile**: Computes net marks after critical-leak deductions, 5-dimension rubric percentages, overconfidence errors, and a ranked leak profile.
-4. **Targeted Recovery & Practical Proof**: Surfaces leak-matched drills (`src/remediation-data.json`), the Week 1 Class 1 verification checklist, a written proof summary, and optional working-file attachment in IndexedDB.
-5. **Fresh Reassessment & Sealed Submission**: Verifies transfer on 3 unseen questions and seals a timestamped submission receipt (`N5G1-...`) with a SHA-256 digest and downloadable `.txt` / `.json` handoff files.
+3. **Rubric Scoring & Leak Profile**: Computes net marks after critical-leak deductions, 5-dimension rubric percentages, overconfidence errors, and a ranked leak profile. Learners who score **100%** (zero skill leaks) skip targeted recovery and reassessment and proceed straight to final submission.
+4. **Targeted Recovery & Practical Proof** *(when leaks are detected)*: Surfaces leak-matched drills (`src/remediation-data.json`), the Week 1 Class 1 verification checklist, a written proof summary, and optional working-file attachment in IndexedDB.
+5. **Fresh Reassessment & Sealed Submission**: Verifies transfer on 3 unseen questions (for leak recovery paths) and seals a timestamped submission receipt (`N5G1-...`) with a SHA-256 digest and downloadable `.txt` / `.json` handoff files.
 
 All Gate 01 auth credentials, attempts, and receipts are stored locally in the browser (`localStorage` + `IndexedDB`) for offline-capable student use and receipt handoff; multi-device cohort sync requires a backend integration.
