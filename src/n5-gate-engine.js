@@ -569,12 +569,28 @@ export function acknowledgeDiagnostics(record, now = Date.now()) {
 }
 
 /**
+ * Check whether the submitted Gate attempt achieved 100% with zero skill leaks.
+ */
+export function hasZeroLeaks(record) {
+  return Boolean(
+    record?.submittedAt &&
+      record?.result &&
+      Array.isArray(record.result.recommendedLeaks) &&
+      record.result.recommendedLeaks.length === 0 &&
+      record.result.score === record.result.total
+  )
+}
+
+/**
  * Determine the student's current Gate workflow stage.
  */
 export function getGateStage(session, record, _now = Date.now()) {
   if (!session) return 'auth'
   if (record?.finalSubmission) return 'submitted'
   if (record?.submittedAt) {
+    if (hasZeroLeaks(record)) {
+      return record.diagnosticsAckedAt ? 'final_review' : 'diagnostics'
+    }
     const drills = getRecoveryDrillsForLeaks(record.result?.recommendedLeaks || [])
     if (isRecoveryComplete(record, drills)) return 'reassessment'
     if (record.diagnosticsAckedAt) return 'recovery'
@@ -743,15 +759,14 @@ export function scoreGateAttempt(answers = {}, confidence = {}, questions = GATE
 }
 
 /**
- * Filter N5 remediation drills prioritized by detected leaks, or return 1 consolidation drill on 100%.
+ * Filter N5 remediation drills prioritized by detected leaks. Returns [] when zero leaks exist.
  */
 export function getRecoveryDrillsForLeaks(recommendedLeaks = []) {
   const n5Drills = repairs.filter((item) => item.subjectCode === 'n5')
   const leaks = Array.isArray(recommendedLeaks) ? recommendedLeaks : []
 
   if (leaks.length === 0) {
-    const consolidation = n5Drills.find((item) => item.id === 'n5-time') || n5Drills[0]
-    return consolidation ? [consolidation] : []
+    return []
   }
 
   const matching = n5Drills
@@ -788,8 +803,10 @@ export function selectReassessmentQuestions(recommendedLeaks = []) {
 
 /**
  * Check whether all targeted drills, practical proof checkboxes, and the written proof summary are complete.
+ * Returns true automatically when the learner achieved 100% with zero leaks.
  */
 export function isRecoveryComplete(record, drills = []) {
+  if (hasZeroLeaks(record)) return true
   const recovery = record?.recovery
   if (!recovery) return false
 
@@ -888,20 +905,31 @@ export function submitReassessment(record, answers = {}, now = Date.now()) {
 }
 
 /**
- * Produce the tamper-evident final Gate submission receipt once gate, recovery, and reassessment are complete.
+ * Produce the tamper-evident final Gate submission receipt once gate (and recovery/reassessment if leaks exist) are complete.
  */
 export async function finalizeGateSubmission(session, record, now = Date.now()) {
   if (!session?.studentCode) {
     throw new Error('Cannot finalize submission without an active student session.')
   }
+  const zeroLeaks = hasZeroLeaks(record)
   const drills = getRecoveryDrillsForLeaks(record?.result?.recommendedLeaks || [])
-  if (!record?.submittedAt || !isRecoveryComplete(record, drills) || !record?.reassessment?.result) {
+  if (!record?.submittedAt) {
+    throw new Error('Cannot finalize Gate submission before completing the Gate attempt.')
+  }
+  if (!zeroLeaks && (!isRecoveryComplete(record, drills) || !record?.reassessment?.result)) {
     throw new Error('Cannot finalize Gate submission before gate attempt, recovery, and reassessment are complete.')
   }
 
-  const evidenceFiles = (record.recovery.evidenceFiles || []).map((item) =>
+  const evidenceFiles = (record.recovery?.evidenceFiles || []).map((item) =>
     typeof item === 'string' ? item : item?.file || ''
   ).filter(Boolean)
+
+  const proofSummary = zeroLeaks
+    ? String(record.recovery?.proofSummary || '').trim() || 'Exempt — 100% Gate 01 mastery (0 leaks detected)'
+    : record.recovery.proofSummary
+  const reassessmentScore = zeroLeaks
+    ? 'Exempt (100% Gate score)'
+    : `${record.reassessment.result.correct}/${record.reassessment.result.total}`
 
   const payload = JSON.stringify({
     studentCode: session.studentCode,
@@ -909,10 +937,11 @@ export async function finalizeGateSubmission(session, record, now = Date.now()) 
     submittedAt: now,
     gateScore: record.result.score,
     gateTotal: record.result.total,
-    reassessmentCorrect: record.reassessment.result.correct,
-    reassessmentTotal: record.reassessment.result.total,
+    reassessmentCorrect: zeroLeaks ? null : record.reassessment.result.correct,
+    reassessmentTotal: zeroLeaks ? null : record.reassessment.result.total,
+    recoveryExempt: zeroLeaks,
     leaksAddressed: record.result.recommendedLeaks,
-    proofSummary: record.recovery.proofSummary,
+    proofSummary,
     evidenceFiles,
   })
 
@@ -930,9 +959,10 @@ export async function finalizeGateSubmission(session, record, now = Date.now()) 
     gateTotal: record.result.total,
     gatePercent: record.result.percent,
     readinessLabel: record.result.readinessLabel,
+    recoveryExempt: zeroLeaks,
     leaksAddressed: record.result.recommendedLeaks,
-    reassessmentScore: `${record.reassessment.result.correct}/${record.reassessment.result.total}`,
-    proofSummary: record.recovery.proofSummary,
+    reassessmentScore,
+    proofSummary,
     evidenceFiles,
     digest,
   }
@@ -940,8 +970,8 @@ export async function finalizeGateSubmission(session, record, now = Date.now()) 
   return {
     ...record,
     recovery: {
-      ...record.recovery,
-      confirmedAt: record.recovery.confirmedAt || now,
+      ...(record.recovery || {}),
+      confirmedAt: record.recovery?.confirmedAt || now,
     },
     finalSubmission,
   }

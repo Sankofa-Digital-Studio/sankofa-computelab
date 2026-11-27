@@ -40,6 +40,7 @@ import {
   getGateStage,
   getOrCreateDeviceId,
   getRecoveryDrillsForLeaks,
+  hasZeroLeaks,
   isGateExpired,
   isRecoveryComplete,
   readGateStore,
@@ -114,7 +115,7 @@ function getActiveStepperIndex(stage) {
   if (stage === 'diagnostics') return 1
   if (stage === 'recovery') return 2
   if (stage === 'reassessment') return 3
-  if (stage === 'submitted') return 4
+  if (stage === 'final_review' || stage === 'submitted') return 4
   return 0
 }
 
@@ -540,6 +541,7 @@ export function N5Gate({ notify, onNav }) {
   }
 
   const activeStepIdx = getActiveStepperIndex(stage)
+  const zeroLeaks = hasZeroLeaks(record)
   const answeredCount = GATE_QUESTIONS.filter((q) => Number.isInteger(record?.answers?.[q.id])).length
   const remainingMs = record?.endTime ? Math.max(0, record.endTime - nowMs) : GATE_DURATION_MINUTES * 60_000
   const timerUrgent = remainingMs <= 5 * 60_000
@@ -582,8 +584,9 @@ export function N5Gate({ notify, onNav }) {
 
           <ol className="n5g-stepper" aria-label="Gate 01 workflow steps">
             {STEPPER_ITEMS.map((item, index) => {
-              const isDone = stage === 'submitted' ? true : index < activeStepIdx
-              const isActive = stage !== 'submitted' && index === activeStepIdx
+              const exemptStep = zeroLeaks && (item.key === 'recovery' || item.key === 'reassessment')
+              const isDone = stage === 'submitted' ? true : exemptStep || index < activeStepIdx
+              const isActive = stage !== 'submitted' && !exemptStep && index === activeStepIdx
               return (
                 <li
                   key={item.key}
@@ -591,7 +594,9 @@ export function N5Gate({ notify, onNav }) {
                   aria-current={isActive ? 'step' : undefined}
                 >
                   <span className="n5g-step-num">{isDone ? '✓' : index + 1}</span>
-                  <span className="n5g-step-label">{item.label}</span>
+                  <span className="n5g-step-label">
+                    {exemptStep ? `${item.label} (Exempt)` : item.label}
+                  </span>
                 </li>
               )
             })}
@@ -1122,8 +1127,9 @@ export function N5Gate({ notify, onNav }) {
               <div className="n5g-alert info" style={{ marginTop: 8 }}>
                 <CheckCircle2 size={18} />
                 <span>
-                  Zero skill leaks detected! Complete the consolidation time-discipline check in the
-                  next stage to seal your verification packet.
+                  100% Mastery — Zero skill leaks detected! Targeted recovery and weak-area
+                  reassessment are not required. Review your breakdown below and proceed directly to
+                  final submission.
                 </span>
               </div>
             )}
@@ -1168,7 +1174,8 @@ export function N5Gate({ notify, onNav }) {
 
           <div className="button-row">
             <button className="btn primary" type="button" onClick={handleAcknowledgeDiagnostics}>
-              Begin Targeted Recovery <ArrowRight size={16} />
+              {zeroLeaks ? 'Proceed to Final Submission' : 'Begin Targeted Recovery'}{' '}
+              <ArrowRight size={16} />
             </button>
           </div>
         </section>
@@ -1566,6 +1573,93 @@ export function N5Gate({ notify, onNav }) {
               </div>
             </>
           )}
+        </section>
+      )}
+
+      {/* STAGE 6B: 100% SCORE DIRECT FINAL SUBMISSION REVIEW */}
+      {stage === 'final_review' && record?.result && (
+        <section className="n5g-panel stack" aria-labelledby="n5g-final-review-heading">
+          <div className="n5g-alert info">
+            <CheckCircle2 size={18} />
+            <div>
+              <strong>100% Gate Mastery — Targeted Recovery &amp; Reassessment Exempt</strong>
+              <div className="compact">
+                You answered all 12 Gate 01 items correctly with zero skill leaks. Review your
+                packet below and submit to seal your receipt.
+              </div>
+            </div>
+          </div>
+
+          <div className="n5g-drill-card" aria-label="Final Submission Packet Review">
+            <div className="eyebrow">FINAL SUBMISSION PACKET REVIEW</div>
+            <h2 id="n5g-final-review-heading">Ready to seal N5 Gate 01</h2>
+            <div className="n5g-packet-grid">
+              <div className="n5g-packet-item">
+                <small>Student Identity</small>
+                <strong>
+                  {session.firstName} {session.lastName} ({session.studentCode})
+                </strong>
+              </div>
+              <div className="n5g-packet-item">
+                <small>Gate 01 Score &amp; Readiness</small>
+                <strong>
+                  {record.result.score}/{record.result.total} ({record.result.percent}%) ·{' '}
+                  {record.result.readinessLabel}
+                </strong>
+              </div>
+              <div className="n5g-packet-item">
+                <small>Targeted Recovery</small>
+                <strong>Exempt (0 leaks detected)</strong>
+              </div>
+              <div className="n5g-packet-item">
+                <small>Reassessment</small>
+                <strong>Exempt (100% Gate score)</strong>
+              </div>
+            </div>
+
+            <label className="field" htmlFor="n5g-optional-evidence-upload">
+              <span>Optional practical working file (not required for 100% mastery)</span>
+              <input
+                id="n5g-optional-evidence-upload"
+                type="file"
+                disabled={fileBusy}
+                onChange={handleAttachEvidenceFile}
+              />
+            </label>
+
+            {record?.recovery?.evidenceFiles?.length > 0 && (
+              <div className="stack">
+                {record.recovery.evidenceFiles.map((fileItem) => (
+                  <div className="row-card card" key={fileItem.id}>
+                    <FileText size={17} />
+                    <div>
+                      <strong>{fileItem.file}</strong>
+                      <small>Saved on this device</small>
+                    </div>
+                    <button
+                      className="btn outline push-right"
+                      type="button"
+                      onClick={() => handleRemoveEvidenceFile(fileItem.id)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className="button-row" style={{ marginTop: 6 }}>
+              <button
+                className="btn primary"
+                type="button"
+                disabled={finalBusy}
+                onClick={handleFinalizeSubmission}
+              >
+                <ShieldCheck size={17} />
+                {finalBusy ? 'Generating SHA-256 Receipt...' : 'Submit N5 Gate 01'}
+              </button>
+            </div>
+          </div>
         </section>
       )}
 
