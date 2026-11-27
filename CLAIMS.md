@@ -13,6 +13,8 @@ This first hourglass pass starts with six broad learner promises, narrows them t
 
 The production preview opened all six destinations from the disclosure. This checks navigation and discoverability. Submission, persistence and lecturer review require their own end-to-end evidence. Curriculum sign-off and site-wide point-of-use copy review remain open.
 
+> **N5 Gate 01 Student Flow (`#n5-gate`)**: Implements the student-side Gate 01 cycle (WebCrypto local auth/passphrase lock, 50-minute timed gate, rubric & leak diagnostics, targeted recovery drills, 3-question reassessment, and downloadable SHA-256 submission receipt). All Gate 01 state persists in the local browser (`localStorage` + `IndexedDB`); shared cohort storage and lecturer-side server moderation remain backend pilot requirements.
+
 ## Approval ownership
 
 OhhttooeeXCIV is the designated product and teaching approver for the six claims above, N5 curriculum coverage and reuse decisions. This records the owner designation. Curriculum validation, asset-level reuse decisions and approval of claim wording are pending.

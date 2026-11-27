@@ -2,7 +2,7 @@ import React from 'react'
 import { diagnosticAction } from './diagnostic-action.js'
 import { CapabilityDisclosure } from './CapabilityDisclosure.jsx'
 import { capabilities } from './capabilities.js'
-import { Route, ArrowRight, ArrowUpRight, BookMarked, BookOpen, Bookmark, ChartNoAxesColumnIncreasing, CircleHelp, ClipboardList, FileText, GraduationCap, Layers3, LayoutGrid, NotebookPen, Table2, Target, Timer, FileCheck2 } from 'lucide-react'
+import { Route, ArrowRight, ArrowUpRight, BookMarked, BookOpen, Bookmark, ChartNoAxesColumnIncreasing, CircleHelp, ClipboardList, FileText, GraduationCap, Layers3, LayoutGrid, NotebookPen, ShieldCheck, Table2, Target, Timer, FileCheck2 } from 'lucide-react'
 
 export const appIcons = {Theory:BookOpen, OneNote:NotebookPen, Word:FileText, Excel:Table2, Integrated:Layers3}
 export const appColors = {Theory:'purple', OneNote:'pink', Word:'blue', Excel:'mint', Integrated:'peach'}
@@ -30,6 +30,9 @@ export function Dashboard({state,onNav,onPractice,questions,course,setCourse,cou
     [Timer,'mint','Timed quizzes','Check your recall under a time limit.',()=>onPractice('quiz')],
     [ClipboardList,'blue','Mock exams','Rehearse whole sections or create your own mock.',()=>onPractice('mocks')]
   ]
+  const toolActions = course === 'cpn5'
+    ? [[ShieldCheck,'mint','N5 Gate 01','Locked 50-minute gate, leak profile, recovery drills & submission.',()=>onNav('n5-gate')], ...actions]
+    : actions
   return <>
     <Header eyebrow="STUDENT WORKSPACE" title="Computer Practice workspace" description="Build practical computer skills for N5 and N6, then test them under exam conditions.">
       <Select label="Active course" value={course} onChange={setCourse} options={courses}/>
@@ -44,10 +47,18 @@ export function Dashboard({state,onNav,onPractice,questions,course,setCourse,cou
       </div>
       <div className="hero-art" aria-hidden="true"><div className="orbit first"/><div className="orbit second"/><div className="art-grid"/><div className="art-book"><BookOpen size={82} strokeWidth={1.12}/></div><span className="art-chip chip-sheet"><Table2 size={26}/></span><span className="art-chip chip-quiz"><FileCheck2 size={25}/></span><span className="art-star star-one">✦</span><span className="art-star star-two">✧</span><span className="art-dot"/></div>
     </section>
+    {course==='cpn5'&&<section className="card n5g-callout" aria-label="N5 Gate 01 readiness workflow">
+      <div className="n5g-callout-copy">
+        <div className="eyebrow"><ShieldCheck size={14}/> N5 READINESS GATE 01</div>
+        <h3>Complete the full 6-stage N5 Gate 01 cycle</h3>
+        <p>Sign in with your cohort number, complete the 50-minute locked gate, review your rubric &amp; leak profile, finish targeted drills and submit your verification packet.</p>
+      </div>
+      <a className="btn primary" href="#n5-gate" onClick={e=>{e.preventDefault();onNav('n5-gate')}}>Open N5 Gate 01 (Auth → Submission) <ArrowRight size={16}/></a>
+    </section>}
     <div className="dashboard-body">
       <section>
         <div className="section-head"><div><h2>Practice tools</h2><p>Choose how you want to prepare.</p></div></div>
-        <div className="tool-grid">{actions.map(([icon,color,title,description,action])=><button className="tool-card" onClick={action} key={title}><IconTile icon={icon} color={color}/><ArrowUpRight className="card-arrow" size={17}/><h3>{title}</h3><p>{description}</p></button>)}</div>
+        <div className="tool-grid">{toolActions.map(([icon,color,title,description,action])=><button className="tool-card" onClick={action} key={title}><IconTile icon={icon} color={color}/><ArrowUpRight className="card-arrow" size={17}/><h3>{title}</h3><p>{description}</p></button>)}</div>
       </section>
       <section>
         <div className="section-head"><div><h2>Your progress</h2><p>Pick up where you left off.</p></div></div>

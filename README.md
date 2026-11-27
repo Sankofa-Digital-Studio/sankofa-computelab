@@ -53,3 +53,15 @@ The overview now explains six learner-facing capabilities and opens the active c
 This release candidate is for local formative practice. Production cohort access, shared records, moderated marking, recovery drills and end-to-end classroom acceptance are tracked in the [P0 project](https://github.com/orgs/Sankofa-Digital-Studio/projects/5).
 
 The [N5 lecturer guide](N5-LECTURER-GATE.md) covers the first pathway gate. Exported learning reviews include course, diagnostic submission status and completed proof count. Free-text reflections, attachments and confidence ratings stay outside this export.
+
+## N5 Gate 01 (Student Auth to Submission)
+
+The `#n5-gate` workspace implements one focused N5 gate—**Gate 01 · Ribbon & Command Control**—across the complete student lifecycle:
+
+1. **Student Auth & Device Lock**: Claim a rostered N5 seat (`N5-101`–`N5-105`) or register a candidate number, set a personal passphrase (PBKDF2/SHA-256 salted hash via WebCrypto), and lock the local session.
+2. **Gate Briefing & Locked 50-Minute Timer**: Start the 12-question (100-mark) Gate 01 attempt with a persistent deadline that survives page refreshes and auto-submits on expiry.
+3. **Rubric Scoring & Leak Profile**: Computes net marks after critical-leak deductions, 5-dimension rubric percentages, overconfidence errors, and a ranked leak profile.
+4. **Targeted Recovery & Practical Proof**: Surfaces leak-matched drills (`src/remediation-data.json`), the Week 1 Class 1 verification checklist, a written proof summary, and optional working-file attachment in IndexedDB.
+5. **Fresh Reassessment & Sealed Submission**: Verifies transfer on 3 unseen questions and seals a timestamped submission receipt (`N5G1-...`) with a SHA-256 digest and downloadable `.txt` / `.json` handoff files.
+
+All Gate 01 auth credentials, attempts, and receipts are stored locally in the browser (`localStorage` + `IndexedDB`) for offline-capable student use and receipt handoff; multi-device cohort sync requires a backend integration.
