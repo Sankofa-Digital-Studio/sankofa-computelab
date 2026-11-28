@@ -7,6 +7,7 @@ import {
   LECTURER_STORAGE_KEY,
   assignCustomPathway,
   buildCohortDiagnostics,
+  clearCustomPathway,
   createInitialLecturerStore,
   createIssueTicket,
   dismissAlertForStudent,
@@ -15,15 +16,17 @@ import {
   lockLecturerConsole,
   readLecturerStore,
   recordGateDecision,
+  removeLecturerAlert,
   replyToIssueTicket,
   sendLecturerAlert,
+  setLecturerPinOverride,
   togglePathwayStep,
   updateIssueStatus,
   verifyLecturerPin,
   writeLecturerStore,
 } from '../src/lecturer-engine.js'
 
-test('COMPLIANCE_MATRIX covers all 5 N5 topics, Gate 01, N6, MS Office, and Lecturer Ops', () => {
+test('COMPLIANCE_MATRIX covers all 5 N5 topics, Gate 01, Gates 02-06, N6, MS Office, Lecturer Ops, and Security', () => {
   const ids = COMPLIANCE_MATRIX.map((r) => r.id)
   for (const expected of [
     'cpn5-topic-1',
@@ -32,9 +35,12 @@ test('COMPLIANCE_MATRIX covers all 5 N5 topics, Gate 01, N6, MS Office, and Lect
     'cpn5-topic-4',
     'cpn5-topic-5',
     'cpn5-gate-01',
+    'cpn5-gates-02-06',
+    'cpn5-pathway-40',
     'cpn6-curriculum',
     'ms-office-ingest',
     'lecturer-ops',
+    'sec-sync',
   ]) {
     assert.ok(ids.includes(expected), `Missing matrix row: ${expected}`)
   }
@@ -208,4 +214,81 @@ test('buildCohortDiagnostics aggregates Gate anomalies, Topic progress, Office l
   assert.match(txt, /N5-101/)
   const csv = formatCohortReportCsv(diag)
   assert.match(csv, /"N5-101","Lerato Mokoena","integrity_hold"/)
+})
+
+test('buildCohortDiagnostics tracks local-learner activity and supports PIN override, pathway clear, and alert removal', () => {
+  let store = verifyLecturerPin(createInitialLecturerStore(), DEFAULT_LECTURER_PIN, 'Ms Khumalo').store
+
+  const pinTooShort = setLecturerPinOverride(store, '12')
+  assert.equal(pinTooShort.ok, false)
+
+  const pinSet = setLecturerPinOverride(store, 'CAMPUS-99')
+  assert.equal(pinSet.ok, true)
+  store = lockLecturerConsole(pinSet.store)
+  assert.equal(verifyLecturerPin(store, DEFAULT_LECTURER_PIN, 'Ms Khumalo').ok, false)
+  const unlockedCustom = verifyLecturerPin(store, 'campus-99', 'Ms Khumalo')
+  assert.equal(unlockedCustom.ok, true)
+  store = unlockedCustom.store
+
+  store = createIssueTicket(store, {
+    studentCode: 'local-learner',
+    studentName: 'Local Learner',
+    issueType: 'office_upload',
+    priority: 'high',
+    subject: 'Word tab stop issue',
+    details: 'Need help aligning dates.',
+  }).store
+  store = assignCustomPathway(store, { studentCode: 'local-learner', leaks: ['WORD_LAYOUT'] }).store
+  store = sendLecturerAlert(store, {
+    targetStudentCode: 'local-learner',
+    severity: 'warning',
+    title: 'Use Tab stops',
+    message: 'Avoid spaces.',
+  }).store
+
+  const diag = buildCohortDiagnostics({
+    gateStore: { recordsByStudent: {}, customRoster: [] },
+    studyState: { learning: { cpn5: { marks: [70, 35, ''] } } },
+    topicStores: {
+      topic3: {
+        byOwner: {
+          'local-learner': {
+            modules: {
+              'topic3-section1': {
+                quickCheckResult: { passed: true },
+                checklist: { 't3-s1-chk1': true, 't3-s1-chk2': true, 't3-s1-chk3': true },
+                evidenceNotes: 'Verified raw vs processed data.',
+              },
+            },
+          },
+        },
+      },
+    },
+    officeStore: {
+      reports: [
+        {
+          id: 'off-loc',
+          studentCode: 'local-learner',
+          fileName: 'Notice.docx',
+          leakWarnings: [{ leak: 'WORD_LAYOUT', severity: 'high', detail: 'Space padding' }],
+        },
+      ],
+    },
+    lecturerStore: store,
+  })
+
+  const localLearner = diag.learners.find((l) => l.studentCode === 'local-learner')
+  assert.ok(localLearner, 'local-learner must appear in diagnostics when active')
+  assert.equal(localLearner.priority, 'urgent')
+  assert.equal(localLearner.officeLeakCount, 1)
+  assert.equal(localLearner.topics.topic3.completedModules, 1)
+  assert.ok(diag.priorityAlerts.some((a) => a.id === 'pa-off-local-learner'))
+
+  const reportTxt = formatCohortReportText(diag)
+  assert.match(reportTxt, /Local N5 Coursework Secured:/)
+
+  store = clearCustomPathway(store, 'local-learner')
+  assert.equal(store.customPathways['local-learner'], undefined)
+  store = removeLecturerAlert(store, store.alerts[0].id)
+  assert.equal(store.alerts.length, 0)
 })

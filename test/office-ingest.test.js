@@ -213,3 +213,42 @@ test('ingestOfficeFile handles CSV, renamed/corrupt Office files, and storage pe
   assert.equal(OFFICE_INGEST_STORAGE_KEY, 'sankofa-office-ingest-v1')
   assert.deepEqual(readOfficeIngestStore({ getItem: () => '{bad' }), createInitialOfficeIngestStore())
 })
+
+test('ingestOfficeFile handles self-closing Excel cells, rId sheet rels, split Word merge fields, and quoted CSVs', async () => {
+  const desktopXlsx = buildTestZip({
+    'xl/workbook.xml':
+      '<workbook><sheets><sheet name="Summary" sheetId="2" r:id="rId1"/><sheet name="Data" sheetId="1" r:id="rId2"/></sheets></workbook>',
+    'xl/_rels/workbook.xml.rels':
+      '<Relationships><Relationship Id="rId1" Target="worksheets/sheet2.xml"/><Relationship Id="rId2" Target="worksheets/sheet1.xml"/></Relationships>',
+    'xl/worksheets/sheet1.xml':
+      '<worksheet><sheetData><row r="1"><c r="A1" s="1"/><c r="B1"><f>SUM(B2:B5)</f><v>40</v></c></row></sheetData></worksheet>',
+    'xl/worksheets/sheet2.xml':
+      '<worksheet><sheetData><row r="1"><c r="A1"><v>10</v></c></row></sheetData></worksheet>',
+  })
+
+  const xlReport = await ingestOfficeFile({ fileName: 'Reordered.xlsx', buffer: desktopXlsx })
+  assert.equal(xlReport.formulas.length, 1)
+  assert.deepEqual(xlReport.formulas[0], {
+    sheet: 'Data',
+    cell: 'B1',
+    formula: '=SUM(B2:B5)',
+  })
+
+  const desktopDocx = buildTestZip({
+    'word/document.xml': [
+      '<w:document><w:body>',
+      '<w:p w14:paraId="1"/>',
+      '<w:p><w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText xml:space="preserve"> MERGEFIELD </w:instrText></w:r><w:r><w:instrText>Delegate_Name</w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:t>«Delegate_Name»</w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r></w:p>',
+      '</w:body></w:document>',
+    ].join(''),
+  })
+
+  const docReport = await ingestOfficeFile({ fileName: 'SplitMerge.docx', buffer: desktopDocx })
+  assert.deepEqual(docReport.metrics.mergeFields, ['Delegate_Name'])
+  assert.ok(docReport.metrics.wordCount >= 1)
+
+  const quotedCsv = new TextEncoder().encode('Student,Mark,Grade\n"Mokoena, Lerato",88,Pass\n"Ntuli, ""Sam""",92,Pass')
+  const csvReport = await ingestOfficeFile({ fileName: 'quoted.csv', buffer: new DataView(quotedCsv.buffer) })
+  assert.equal(csvReport.metrics.raggedRows, 0)
+  assert.equal(csvReport.metrics.rowCount, 2)
+})

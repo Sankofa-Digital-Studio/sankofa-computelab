@@ -1,13 +1,7 @@
-import React,{useEffect,useRef,useState} from 'react'
+import React,{Suspense,lazy,useEffect,useRef,useState} from 'react'
 import { createRoot } from 'react-dom/client'
 import { ArrowUpRight, Bell, BookOpen, ChartNoAxesColumnIncreasing, ChevronDown, ClipboardList, CloudOff, Database, FlaskConical, Globe, Layers3, LayoutDashboard, LockKeyhole, Monitor, Menu, MessageSquare, Network, Settings2, ShieldCheck, Target, Wifi, X } from 'lucide-react'
 import { Dashboard } from './ui'
-import { N5Gate } from './N5Gate'
-import { Topic1 } from './Topic1'
-import { Topic2 } from './Topic2'
-import { Topic3 } from './Topic3'
-import { Topic4 } from './Topic4'
-import { Topic5 } from './Topic5'
 import { Learning } from './learning'
 import { ChallengeLab } from './challenge'
 import { Practice, Progress } from './practice'
@@ -17,6 +11,13 @@ import { commitAttemptRows,key,load } from './store'
 import questions from './questions.json'
 import { levelQuestions } from './level-practice'
 import './style.css'
+
+const N5Gate = lazy(() => import('./N5Gate').then((m) => ({ default: m.N5Gate })))
+const Topic1 = lazy(() => import('./Topic1').then((m) => ({ default: m.Topic1 })))
+const Topic2 = lazy(() => import('./Topic2').then((m) => ({ default: m.Topic2 })))
+const Topic3 = lazy(() => import('./Topic3').then((m) => ({ default: m.Topic3 })))
+const Topic4 = lazy(() => import('./Topic4').then((m) => ({ default: m.Topic4 })))
+const Topic5 = lazy(() => import('./Topic5').then((m) => ({ default: m.Topic5 })))
 
 const nav = [
   ['overview','Overview',LayoutDashboard],
@@ -110,7 +111,7 @@ function App(){
         <div className="top-left"><button className="icon-button menu-button" aria-expanded={menu} aria-label="Open navigation" onClick={()=>setMenu(true)}><Menu size={23}/></button><span className="top-crumb">{nav.find(item=>item[0]===page)?.[1]||'Lecturer Console'}</span><span className="mobile-brand">Sankofa ComputeLab</span></div>
         <div className="top-right"><span className={'status '+(!online?'offline':'')}>{online?<Wifi size={15}/>:<CloudOff size={15}/>} <span>{online?'Online':'Offline'}</span></span><a href="#notices" className="icon-button top-bell" aria-label="College notices" onClick={()=>go('notices')}><Bell size={19}/></a><label className="course-switch"><span className="avatar">{courses.find(row=>row.id===course)?.code}</span><select aria-label="Active course shortcut" value={course} onChange={e=>chooseCourse(e.target.value)}>{courses.map(row=><option key={row.id} value={row.id}>{row.title}</option>)}</select><ChevronDown size={14}/></label></div>
       </header>
-      <main id="main-content" tabIndex={-1}>{pages[page]}</main>
+      <main id="main-content" tabIndex={-1}><Suspense fallback={<div className="card padded">Loading workspace…</div>}>{pages[page]}</Suspense></main>
     </div>
     <nav className="bottom-nav" aria-label="Quick navigation">{nav.filter(row=>!['learning','n5-gate','topic-1','topic-2','topic-3','topic-4','topic-5'].includes(row[0])).slice(0,5).map(([id,label,Icon])=><a key={id} href={'#'+id} className={page===id?'active':''} aria-current={page===id?'page':undefined} onClick={()=>go(id)}><Icon size={19}/><span>{{overview:'Overview',library:'Library',practice:'Practice',challenges:'Lab',progress:'Progress'}[id]}</span></a>)}<button onClick={()=>setMenu(true)} aria-label="More pages"><Menu size={19}/><span>More</span></button></nav>
     {toast&&<div className="toast" role="status">{toast}</div>}

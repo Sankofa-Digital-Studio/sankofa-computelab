@@ -27,6 +27,7 @@ import {
   DEFAULT_LECTURER_PIN,
   assignCustomPathway,
   buildCohortDiagnostics,
+  clearCustomPathway,
   createIssueTicket,
   formatCohortReportCsv,
   formatCohortReportText,
@@ -34,8 +35,10 @@ import {
   lockLecturerConsole,
   readLecturerStore,
   recordGateDecision,
+  removeLecturerAlert,
   replyToIssueTicket,
   sendLecturerAlert,
+  setLecturerPinOverride,
   updateIssueStatus,
   verifyLecturerPin,
   writeLecturerStore,
@@ -107,6 +110,8 @@ export function LecturerConsole({ state, update, notify, leave }) {
   const [matTarget, setMatTarget] = useState('')
   const [matBusy, setMatBusy] = useState(false)
   const [officeBusy, setOfficeBusy] = useState(false)
+  const [officeCourse, setOfficeCourse] = useState('cpn5')
+  const [newPinInput, setNewPinInput] = useState('')
 
   const snapshot = useMemo(() => loadAllLocalStoresSnapshot(), [lecturerStore, officeStore, state])
   const diagnostics = useMemo(
@@ -162,8 +167,15 @@ export function LecturerConsole({ state, update, notify, leave }) {
 
   function openLearnerPathway(learner) {
     setSelectedCode(learner.studentCode)
-    setSelectedLeaks(learner.gate.topLeaks.length ? learner.gate.topLeaks : [])
+    setSelectedLeaks(
+      learner.customPathway?.leaks?.length
+        ? learner.customPathway.leaks
+        : learner.gate.topLeaks.length
+          ? learner.gate.topLeaks
+          : []
+    )
     setPathwayNote(learner.customPathway?.note || '')
+    setPathwayDue(learner.customPathway?.dueLabel || 'Before next gate window')
     setGateDecision(learner.gateDecision?.decision || 'released')
     setModerationNote(learner.gateDecision?.note || '')
     setTab('pathways')
@@ -268,7 +280,7 @@ export function LecturerConsole({ state, update, notify, leave }) {
         buffer,
         byteSize: file.size,
         studentCode: selectedLearner?.studentCode || 'LECTURER-AUDIT',
-        course: 'cpn5',
+        course: officeCourse,
         contextTag: 'lecturer-inspector',
         fileId,
       })
@@ -380,7 +392,7 @@ export function LecturerConsole({ state, update, notify, leave }) {
                 type="password"
                 value={pinInput}
                 onChange={(e) => setPinInput(e.target.value)}
-                placeholder={`Pilot PIN: ${DEFAULT_LECTURER_PIN}`}
+                placeholder={lecturerStore.pinOverride ? 'Enter custom lecturer PIN' : `Pilot PIN: ${DEFAULT_LECTURER_PIN}`}
                 required
               />
             </label>
@@ -393,9 +405,11 @@ export function LecturerConsole({ state, update, notify, leave }) {
               <button className="btn primary" type="submit">
                 <ShieldCheck size={16} /> Unlock Lecturer Console
               </button>
-              <button className="btn outline" type="button" onClick={handleQuickDemoUnlock}>
-                Use Pilot PIN ({DEFAULT_LECTURER_PIN})
-              </button>
+              {!lecturerStore.pinOverride && (
+                <button className="btn outline" type="button" onClick={handleQuickDemoUnlock}>
+                  Use Pilot PIN ({DEFAULT_LECTURER_PIN})
+                </button>
+              )}
             </div>
           </form>
         </section>
@@ -533,6 +547,24 @@ export function LecturerConsole({ state, update, notify, leave }) {
                   .join(' · ')}
               </div>
             )}
+
+            {diagnostics.n5CourseworkEstimate?.valid &&
+              (diagnostics.n5CourseworkEstimate.secured > 0 || diagnostics.n5CourseworkEstimate.complete) && (
+                <div className="n5g-alert info" style={{ marginTop: 10 }}>
+                  <BookOpenCheck size={17} />
+                  <div>
+                    <strong>Local N5 40% Coursework Qualification Planner:</strong>{' '}
+                    Secured {diagnostics.n5CourseworkEstimate.secured.toFixed(1)}% across entered weights.
+                    {diagnostics.n5CourseworkEstimate.needed !== null
+                      ? ` Needs ${diagnostics.n5CourseworkEstimate.needed.toFixed(1)}% in Internal Exam to reach 40%.`
+                      : diagnostics.n5CourseworkEstimate.complete
+                        ? diagnostics.n5CourseworkEstimate.secured >= 40
+                          ? ' Meets the 40% exam admission threshold.'
+                          : ' Below the 40% threshold — urgent intervention required.'
+                        : ''}
+                  </div>
+                </div>
+              )}
           </div>
 
           <div className="card padded">
@@ -713,7 +745,30 @@ export function LecturerConsole({ state, update, notify, leave }) {
                         Auto-fill from Gate Leaks ({selectedLearner.gate.topLeaks.join(', ')})
                       </button>
                     )}
+                    {selectedLearner.customPathway && (
+                      <button
+                        className="btn outline"
+                        type="button"
+                        onClick={() => {
+                          commitLecturer(clearCustomPathway(lecturerStore, selectedLearner.studentCode))
+                          setSelectedLeaks([])
+                          setPathwayNote('')
+                          notify?.(`Cleared custom pathway for ${selectedLearner.studentCode}.`)
+                        }}
+                      >
+                        Clear Pathway
+                      </button>
+                    )}
                   </div>
+                  {selectedLearner.customPathway && (
+                    <div className="learning-callout" style={{ marginTop: 10 }}>
+                      <strong>
+                        Active Pathway ({selectedLearner.customPathway.steps.filter((s) => s.completed).length}/
+                        {selectedLearner.customPathway.steps.length} steps completed):
+                      </strong>{' '}
+                      {selectedLearner.customPathway.steps.map((s) => `${s.completed ? '✓' : '○'} ${s.title}`).join(' · ')}
+                    </div>
+                  )}
                 </form>
 
                 <form className="card padded" onSubmit={handleSaveGateDecision}>
@@ -821,6 +876,32 @@ export function LecturerConsole({ state, update, notify, leave }) {
             <button className="btn primary" type="submit">
               Publish Alert
             </button>
+
+            {(lecturerStore.alerts || []).length > 0 && (
+              <div className="stack" style={{ marginTop: 12 }}>
+                <h4>Active Published Alerts ({lecturerStore.alerts.length})</h4>
+                {lecturerStore.alerts.map((a) => (
+                  <div className="history-row" key={a.id}>
+                    <span>
+                      <strong>
+                        [{a.severity.toUpperCase()} → {a.targetStudentCode}] {a.title}
+                      </strong>{' '}
+                      · {a.message}
+                    </span>
+                    <button
+                      type="button"
+                      className="btn outline"
+                      onClick={() => {
+                        commitLecturer(removeLecturerAlert(lecturerStore, a.id))
+                        notify?.('Alert removed.')
+                      }}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
           </form>
 
           <div className="card padded">
@@ -927,15 +1008,18 @@ export function LecturerConsole({ state, update, notify, leave }) {
             <p>
               Inspect Excel formulas, absolute ($) locks, print scaling, Word Heading styles, tab stops, page breaks, and Mail Merge fields directly in the browser from `.xlsx`, `.docx`, `.csv`, and `.txt` files.
             </p>
-            <label className="field" style={{ marginTop: 10 }}>
-              <span>Inspect any local MS Office file (.xlsx, .docx, .csv, .txt)</span>
-              <input
-                type="file"
-                accept=".xlsx,.xlsm,.docx,.csv,.txt,.md,.html"
-                disabled={officeBusy}
-                onChange={handleInspectOfficeUpload}
-              />
-            </label>
+            <div className="filters" style={{ marginTop: 10 }}>
+              <Select label="Tag inspection course" value={officeCourse} onChange={setOfficeCourse} options={courses} />
+              <label className="field">
+                <span>Inspect any local MS Office file (.xlsx, .docx, .csv, .txt)</span>
+                <input
+                  type="file"
+                  accept=".xlsx,.xlsm,.docx,.csv,.txt,.md,.html"
+                  disabled={officeBusy}
+                  onChange={handleInspectOfficeUpload}
+                />
+              </label>
+            </div>
           </div>
 
           {officeStore.reports.length === 0 ? (
@@ -995,6 +1079,19 @@ export function LecturerConsole({ state, update, notify, leave }) {
                             <code>
                               {f.sheet}!{f.cell}: {f.formula}
                             </code>
+                          </li>
+                        ))}
+                      </ul>
+                    </details>
+                  )}
+
+                  {r.previewLines?.length > 0 && (
+                    <details style={{ marginTop: 8 }}>
+                      <summary>Extracted Content Preview ({r.previewLines.length} lines)</summary>
+                      <ul>
+                        {r.previewLines.map((line, idx) => (
+                          <li key={idx}>
+                            <code>{line}</code>
                           </li>
                         ))}
                       </ul>
@@ -1243,6 +1340,64 @@ export function LecturerConsole({ state, update, notify, leave }) {
               <p className="compact">No local submissions yet.</p>
             )}
           </div>
+
+          <form
+            className="card padded narrow"
+            onSubmit={(e) => {
+              e.preventDefault()
+              const res = setLecturerPinOverride(lecturerStore, newPinInput)
+              if (!res.ok) {
+                notify?.(res.error)
+                return
+              }
+              commitLecturer(res.store)
+              setNewPinInput('')
+              notify?.(
+                res.store.pinOverride
+                  ? 'Custom lecturer PIN saved on this device.'
+                  : 'Restored default pilot PIN.'
+              )
+            }}
+          >
+            <h3>
+              <Lock size={16} style={{ verticalAlign: 'middle', marginRight: 6 }} />
+              Lecturer Access PIN Settings
+            </h3>
+            <p className="compact">
+              {lecturerStore.pinOverride
+                ? 'A custom campus PIN is active (pilot demo shortcut hidden).'
+                : `Using pilot default PIN (${DEFAULT_LECTURER_PIN}). Set a private PIN before classroom use.`}
+            </p>
+            <label className="field">
+              <span>New lecturer PIN (min 4 chars, or blank to restore pilot default)</span>
+              <input
+                type="password"
+                value={newPinInput}
+                onChange={(e) => setNewPinInput(e.target.value)}
+                placeholder="Leave blank to restore default"
+              />
+            </label>
+            <div className="button-row">
+              <button className="btn outline" type="submit">
+                Update PIN
+              </button>
+              {lecturerStore.pinOverride && (
+                <button
+                  className="btn text-button"
+                  type="button"
+                  onClick={() => {
+                    const res = setLecturerPinOverride(lecturerStore, '')
+                    if (res.ok) {
+                      commitLecturer(res.store)
+                      notify?.('Restored default pilot PIN.')
+                    }
+                  }}
+                >
+                  Reset to pilot default
+                </button>
+              )}
+            </div>
+          </form>
         </div>
       )}
     </div>

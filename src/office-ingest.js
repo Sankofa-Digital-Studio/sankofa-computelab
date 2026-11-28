@@ -6,6 +6,16 @@ function isPlainObject(value) {
   return Boolean(value) && typeof value === 'object' && !Array.isArray(value)
 }
 
+function toUint8Array(input) {
+  if (!input) return null
+  if (input instanceof Uint8Array) return input
+  if (input instanceof ArrayBuffer) return new Uint8Array(input)
+  if (ArrayBuffer.isView(input)) {
+    return new Uint8Array(input.buffer, input.byteOffset, input.byteLength)
+  }
+  return null
+}
+
 function readUint16LE(bytes, offset) {
   return bytes[offset] | (bytes[offset + 1] << 8)
 }
@@ -48,14 +58,7 @@ async function inflateRawBytes(compressedBytes) {
  * Parse a standard ZIP archive (used by .xlsx, .docx, and Sankofa starter kits) into a map of path -> Uint8Array.
  */
 export async function readZipEntries(input) {
-  const bytes =
-    input instanceof Uint8Array
-      ? input
-      : input instanceof ArrayBuffer
-        ? new Uint8Array(input)
-        : ArrayBuffer.isView(input)
-          ? new Uint8Array(input.buffer, input.byteOffset, input.byteLength)
-          : null
+  const bytes = toUint8Array(input)
 
   if (!bytes || bytes.length < 22) {
     throw new Error('File is not a valid ZIP/Office OOXML archive.')
@@ -134,17 +137,26 @@ export async function readZipEntries(input) {
 }
 
 function readZipText(entries, path) {
-  const data = entries.get(path)
+  let data = entries.get(path)
+  if (!data) {
+    const lower = path.toLowerCase()
+    for (const [k, v] of entries.entries()) {
+      if (k.toLowerCase() === lower) {
+        data = v
+        break
+      }
+    }
+  }
   return data ? textDecoder.decode(data) : ''
 }
 
 function extractSharedStrings(xml) {
   if (!xml) return []
   const strings = []
-  const siMatches = xml.matchAll(/<si\b[^>]*>([\s\S]*?)<\/si>/g)
+  const siMatches = xml.matchAll(/<(?:[a-z0-9_-]+:)?si\b[^>]*>([\s\S]*?)<\/(?:[a-z0-9_-]+:)?si>/gi)
   for (const match of siMatches) {
     const parts = []
-    for (const tMatch of match[1].matchAll(/<t\b[^>]*>([\s\S]*?)<\/t>/g)) {
+    for (const tMatch of match[1].matchAll(/<(?:[a-z0-9_-]+:)?t\b[^>]*>([\s\S]*?)<\/(?:[a-z0-9_-]+:)?t>/gi)) {
       parts.push(decodeXmlEntities(tMatch[1]))
     }
     strings.push(parts.join(''))
@@ -152,19 +164,58 @@ function extractSharedStrings(xml) {
   return strings
 }
 
+function resolveWorkbookSheets(entries, workbookXml) {
+  const relsXml = readZipText(entries, 'xl/_rels/workbook.xml.rels')
+  const relTargets = new Map()
+  for (const m of relsXml.matchAll(/<Relationship\b([^>]*)\/?>/gi)) {
+    const id = getAttr(m[1], 'Id')
+    const target = getAttr(m[1], 'Target')
+    if (id && target) {
+      const normalized = target.startsWith('/')
+        ? target.slice(1)
+        : target.startsWith('xl/')
+          ? target
+          : `xl/${target.replace(/^\.\//, '')}`
+      relTargets.set(id, normalized)
+    }
+  }
+
+  const fallbackPaths = [...entries.keys()]
+    .filter((p) => /^xl\/worksheets\/sheet\d+\.xml$/i.test(p))
+    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
+
+  const resolved = []
+  const seenPaths = new Set()
+  let idx = 0
+  for (const m of workbookXml.matchAll(/<(?:[a-z0-9_-]+:)?sheet\b([^>]*)\/?>/gi)) {
+    const name = getAttr(m[1], 'name')
+    const rid = getAttr(m[1], 'r:id') || getAttr(m[1], 'id')
+    let targetPath = rid ? relTargets.get(rid) : ''
+    if (!targetPath || !readZipText(entries, targetPath)) {
+      targetPath = fallbackPaths[idx] || ''
+    }
+    if (name && targetPath) {
+      resolved.push({ name, path: targetPath })
+      seenPaths.add(targetPath.toLowerCase())
+    }
+    idx += 1
+  }
+
+  for (const p of fallbackPaths) {
+    if (!seenPaths.has(p.toLowerCase())) {
+      resolved.push({ name: p.split('/').pop(), path: p })
+    }
+  }
+
+  return resolved
+}
+
 function analyzeXlsxEntries(entries, fileName, byteSize) {
   const workbookXml = readZipText(entries, 'xl/workbook.xml')
   const sharedStrings = extractSharedStrings(readZipText(entries, 'xl/sharedStrings.xml'))
 
-  const sheets = []
-  for (const m of workbookXml.matchAll(/<sheet\b([^>]*)\/?>/g)) {
-    const name = getAttr(m[1], 'name')
-    if (name) sheets.push(name)
-  }
-
-  const sheetPaths = [...entries.keys()]
-    .filter((p) => /^xl\/worksheets\/sheet\d+\.xml$/i.test(p))
-    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
+  const resolvedSheets = resolveWorkbookSheets(entries, workbookXml)
+  const sheets = resolvedSheets.map((s) => s.name)
 
   let populatedCells = 0
   let numericCells = 0
@@ -181,17 +232,17 @@ function analyzeXlsxEntries(entries, fileName, byteSize) {
   const functionsUsed = new Set()
   const previewRows = []
 
-  for (let idx = 0; idx < sheetPaths.length; idx += 1) {
-    const sheetPath = sheetPaths[idx]
-    const sheetLabel = sheets[idx] || sheetPath.split('/').pop()
+  for (const sheetEntry of resolvedSheets) {
+    const sheetPath = sheetEntry.path
+    const sheetLabel = sheetEntry.name
     const xml = readZipText(entries, sheetPath)
 
-    if (/<autoFilter\b/i.test(xml)) hasAutoFilter = true
-    if (/<dataValidations\b/i.test(xml)) hasDataValidation = true
-    if (/<conditionalFormatting\b/i.test(xml)) hasConditionalFormatting = true
+    if (/<(?:[a-z0-9_-]+:)?autoFilter\b/i.test(xml)) hasAutoFilter = true
+    if (/<(?:[a-z0-9_-]+:)?dataValidations\b/i.test(xml)) hasDataValidation = true
+    if (/<(?:[a-z0-9_-]+:)?conditionalFormatting\b/i.test(xml)) hasConditionalFormatting = true
 
-    const pageSetupMatch = /<pageSetup\b([^>]*)\/?>/i.exec(xml)
-    const fitToPage = /<pageSetUpPr\b[^>]*fitToPage="1"/i.test(xml)
+    const pageSetupMatch = /<(?:[a-z0-9_-]+:)?pageSetup\b([^>]*)\/?>/i.exec(xml)
+    const fitToPage = /<(?:[a-z0-9_-]+:)?pageSetUpPr\b[^>]*fitToPage="1"/i.test(xml)
     if (pageSetupMatch) {
       const orient = getAttr(pageSetupMatch[1], 'orientation').toLowerCase()
       const fitW = getAttr(pageSetupMatch[1], 'fitToWidth')
@@ -202,15 +253,17 @@ function analyzeXlsxEntries(entries, fileName, byteSize) {
     }
 
     const rowPreviewCells = []
-    for (const cellMatch of xml.matchAll(/<c\b([^>]*)>([\s\S]*?)<\/c>/g)) {
+    const cellRegex = /<(?:[a-z0-9_-]+:)?c\b([^>]*?)(?:\/>|>([\s\S]*?)<\/(?:[a-z0-9_-]+:)?c>)/gi
+    for (const cellMatch of xml.matchAll(cellRegex)) {
       const attrs = cellMatch[1]
-      const inner = cellMatch[2]
+      const inner = cellMatch[2] || ''
+      if (!inner) continue
       const ref = getAttr(attrs, 'r')
       const type = getAttr(attrs, 't')
 
-      const fMatch = /<f\b[^>]*>([\s\S]*?)<\/f>/.exec(inner)
-      const vMatch = /<v\b[^>]*>([\s\S]*?)<\/v>/.exec(inner)
-      const inlineT = /<is>[\s\S]*?<t\b[^>]*>([\s\S]*?)<\/t>[\s\S]*?<\/is>/.exec(inner)
+      const fMatch = /<(?:[a-z0-9_-]+:)?f\b[^>]*>([\s\S]*?)<\/(?:[a-z0-9_-]+:)?f>/i.exec(inner)
+      const vMatch = /<(?:[a-z0-9_-]+:)?v\b[^>]*>([\s\S]*?)<\/(?:[a-z0-9_-]+:)?v>/i.exec(inner)
+      const isMatch = /<(?:[a-z0-9_-]+:)?is\b[^>]*>([\s\S]*?)<\/(?:[a-z0-9_-]+:)?is>/i.exec(inner)
 
       let displayVal = ''
       if (fMatch) {
@@ -241,12 +294,16 @@ function analyzeXlsxEntries(entries, fileName, byteSize) {
           numericCells += 1
           if (!displayVal) displayVal = rawVal
         }
-      } else if (inlineT) {
+      } else if (isMatch) {
+        const parts = []
+        for (const tMatch of isMatch[1].matchAll(/<(?:[a-z0-9_-]+:)?t\b[^>]*>([\s\S]*?)<\/(?:[a-z0-9_-]+:)?t>/gi)) {
+          parts.push(decodeXmlEntities(tMatch[1]))
+        }
         textCells += 1
-        if (!displayVal) displayVal = decodeXmlEntities(inlineT[1])
+        if (!displayVal) displayVal = parts.join('')
       }
 
-      if (fMatch || vMatch || inlineT) {
+      if (fMatch || vMatch || isMatch) {
         populatedCells += 1
         if (rowPreviewCells.length < 8 && displayVal) {
           rowPreviewCells.push(`${ref}: ${displayVal}`)
@@ -330,6 +387,41 @@ function analyzeXlsxEntries(entries, fileName, byteSize) {
   }
 }
 
+function extractDocxFieldInstructions(allXml) {
+  const instrTexts = []
+  let activeField = null
+  const tokenRegex =
+    /<w:fldChar\b([^>]*)\/?>|<w:instrText\b[^>]*>([\s\S]*?)<\/w:instrText>|<w:fldSimple\b([^>]*)>/gi
+
+  for (const m of allXml.matchAll(tokenRegex)) {
+    if (m[1] !== undefined) {
+      const fType = (getAttr(m[1], 'w:fldCharType') || getAttr(m[1], 'fldCharType')).toLowerCase()
+      if (fType === 'begin') {
+        activeField = []
+      } else if ((fType === 'separate' || fType === 'end') && activeField !== null) {
+        const joined = activeField.join('').trim()
+        if (joined) instrTexts.push(joined)
+        activeField = null
+      }
+    } else if (m[2] !== undefined) {
+      const chunk = decodeXmlEntities(m[2])
+      if (activeField !== null) {
+        activeField.push(chunk)
+      } else if (chunk.trim()) {
+        instrTexts.push(chunk.trim())
+      }
+    } else if (m[3] !== undefined) {
+      const instr = getAttr(m[3], 'w:instr') || getAttr(m[3], 'instr')
+      if (instr.trim()) instrTexts.push(instr.trim())
+    }
+  }
+  if (activeField !== null) {
+    const joined = activeField.join('').trim()
+    if (joined) instrTexts.push(joined)
+  }
+  return instrTexts
+}
+
 function analyzeDocxEntries(entries, fileName, byteSize) {
   const docXml = readZipText(entries, 'word/document.xml')
   const headerPaths = [...entries.keys()].filter((p) => /^word\/header\d+\.xml$/i.test(p))
@@ -337,7 +429,7 @@ function analyzeDocxEntries(entries, fileName, byteSize) {
   const extraXml = [...headerPaths, ...footerPaths].map((p) => readZipText(entries, p)).join('\n')
   const allXml = `${docXml}\n${extraXml}`
 
-  const paragraphs = [...docXml.matchAll(/<w:p\b[^>]*>([\s\S]*?)<\/w:p>/g)]
+  const paragraphs = [...docXml.matchAll(/<w:p\b([^>]*?)(?:\/>|>([\s\S]*?)<\/w:p>)/gi)]
   let wordCount = 0
   let emptyParagraphs = 0
   let maxConsecutiveEmpty = 0
@@ -347,7 +439,7 @@ function analyzeDocxEntries(entries, fileName, byteSize) {
   const previewLines = []
 
   for (const pMatch of paragraphs) {
-    const pInner = pMatch[1]
+    const pInner = pMatch[2] || ''
     const styleMatch = /<w:pStyle\b([^>]*)\/?>/i.exec(pInner)
     if (styleMatch) {
       const styleVal = getAttr(styleMatch[1], 'w:val') || getAttr(styleMatch[1], 'val')
@@ -357,7 +449,7 @@ function analyzeDocxEntries(entries, fileName, byteSize) {
     }
 
     const textParts = []
-    for (const tMatch of pInner.matchAll(/<w:t\b[^>]*>([\s\S]*?)<\/w:t>/g)) {
+    for (const tMatch of pInner.matchAll(/<w:t\b[^>]*>([\s\S]*?)<\/w:t>/gi)) {
       textParts.push(decodeXmlEntities(tMatch[1]))
     }
     const line = textParts.join('')
@@ -380,21 +472,13 @@ function analyzeDocxEntries(entries, fileName, byteSize) {
     }
   }
 
-  const tableCount = (docXml.match(/<w:tbl\b/g) || []).length
-  const tabCount = (docXml.match(/<w:tab\b|<w:tabs\b/g) || []).length
+  const tableCount = (docXml.match(/<w:tbl\b/gi) || []).length
+  const tabCount = (docXml.match(/<w:tab\b|<w:tabs\b/gi) || []).length
   const pageBreakCount = (docXml.match(/<w:br\b[^>]*w:type="page"/gi) || []).length
   const landscapeSections = (docXml.match(/<w:pgSz\b[^>]*w:orient="landscape"/gi) || []).length
   const hasMargins = /<w:pgMar\b/i.test(docXml)
 
-  const instrTexts = []
-  for (const m of allXml.matchAll(/<w:instrText\b[^>]*>([\s\S]*?)<\/w:instrText>|<w:fldSimple\b([^>]*)>/g)) {
-    if (m[1] !== undefined) {
-      instrTexts.push(decodeXmlEntities(m[1]).trim())
-    } else if (m[2] !== undefined) {
-      const instr = getAttr(m[2], 'w:instr') || getAttr(m[2], 'instr')
-      if (instr) instrTexts.push(instr.trim())
-    }
-  }
+  const instrTexts = extractDocxFieldInstructions(allXml)
 
   const mergeFields = []
   let hasPageField = false
@@ -406,9 +490,10 @@ function analyzeDocxEntries(entries, fileName, byteSize) {
     if (/\bPAGE\b/.test(upper)) hasPageField = true
     if (/\bNUMPAGES\b/.test(upper)) hasNumPagesField = true
     if (/\bTOC\b/.test(upper)) hasTocField = true
-    const mergeMatch = /MERGEFIELD\s+("?)([^\s"\\]+)\1/i.exec(instr)
-    if (mergeMatch && !mergeFields.includes(mergeMatch[2])) {
-      mergeFields.push(mergeMatch[2])
+    const mergeMatch = /MERGEFIELD\s+(?:"([^"]+)"|([^\s"\\]+))/i.exec(instr)
+    const fieldName = (mergeMatch?.[1] || mergeMatch?.[2] || '').trim()
+    if (fieldName && !mergeFields.includes(fieldName)) {
+      mergeFields.push(fieldName)
     }
   }
 
@@ -489,6 +574,30 @@ function analyzeDocxEntries(entries, fileName, byteSize) {
   }
 }
 
+function parseCsvLine(line, delimiter) {
+  const cells = []
+  let current = ''
+  let inQuotes = false
+  for (let i = 0; i < line.length; i += 1) {
+    const ch = line[i]
+    if (ch === '"') {
+      if (inQuotes && line[i + 1] === '"') {
+        current += '"'
+        i += 1
+      } else {
+        inQuotes = !inQuotes
+      }
+    } else if (ch === delimiter && !inQuotes) {
+      cells.push(current.trim())
+      current = ''
+    } else {
+      current += ch
+    }
+  }
+  cells.push(current.trim())
+  return cells
+}
+
 function analyzeCsvText(text, fileName, byteSize) {
   const lines = String(text ?? '')
     .replace(/\r\n/g, '\n')
@@ -498,7 +607,7 @@ function analyzeCsvText(text, fileName, byteSize) {
 
   const first = lines[0] || ''
   const delimiter = first.includes(';') && !first.includes(',') ? ';' : first.includes('\t') ? '\t' : ','
-  const rows = lines.map((line) => line.split(delimiter).map((cell) => cell.trim()))
+  const rows = lines.map((line) => parseCsvLine(line, delimiter))
   const headers = rows[0] || []
   const dataRows = rows.slice(1)
   const raggedRows = dataRows.filter((r) => r.length !== headers.length).length
@@ -660,12 +769,14 @@ export async function ingestOfficeFile({
   }
 
   if (ext === 'csv') {
-    const rawText = buffer ? textDecoder.decode(new Uint8Array(buffer)) : ''
+    const u8 = toUint8Array(buffer)
+    const rawText = u8 ? textDecoder.decode(u8) : typeof buffer === 'string' ? buffer : ''
     return { ...baseReport, ...analyzeCsvText(rawText, safeName, size) }
   }
 
   if (ext === 'txt' || ext === 'md' || ext === 'html' || ext === 'htm') {
-    const rawText = buffer ? textDecoder.decode(new Uint8Array(buffer)) : ''
+    const u8 = toUint8Array(buffer)
+    const rawText = u8 ? textDecoder.decode(u8) : typeof buffer === 'string' ? buffer : ''
     return { ...baseReport, ...analyzePlainTextOrHtml(rawText, safeName, size) }
   }
 

@@ -103,6 +103,31 @@ export function lockLecturerConsole(store) {
   }
 }
 
+export function setLecturerPinOverride(store, newPin) {
+  const clean = String(newPin ?? '').trim()
+  if (clean && clean.length < 4) {
+    return { ok: false, error: 'Custom lecturer PIN must be at least 4 characters (or leave blank to restore default).' }
+  }
+  const base = store || createInitialLecturerStore()
+  const now = new Date().toISOString()
+  const auditEntry = {
+    id: `aud-${Date.now().toString(36)}`,
+    at: now,
+    actor: base.lecturerName || 'Lead Lecturer',
+    action: clean ? 'pin_updated' : 'pin_reset',
+    studentCode: 'COHORT',
+    detail: clean ? 'Updated private lecturer console PIN.' : 'Restored default pilot lecturer PIN.',
+  }
+  return {
+    ok: true,
+    store: {
+      ...base,
+      pinOverride: clean,
+      auditLog: [auditEntry, ...(base.auditLog || [])].slice(0, 100),
+    },
+  }
+}
+
 export function createIssueTicket(
   store,
   {
@@ -309,6 +334,26 @@ export function togglePathwayStep(store, studentCode, stepId) {
   }
 }
 
+export function clearCustomPathway(store, studentCode) {
+  const base = store || createInitialLecturerStore()
+  if (!studentCode || !base.customPathways?.[studentCode]) return base
+  const nextPathways = { ...(base.customPathways || {}) }
+  delete nextPathways[studentCode]
+  const auditEntry = {
+    id: `aud-${Date.now().toString(36)}`,
+    at: new Date().toISOString(),
+    actor: base.lecturerName || 'Lead Lecturer',
+    action: 'pathway_cleared',
+    studentCode,
+    detail: 'Cleared assigned custom pathway.',
+  }
+  return {
+    ...base,
+    customPathways: nextPathways,
+    auditLog: [auditEntry, ...(base.auditLog || [])].slice(0, 100),
+  }
+}
+
 export function recordGateDecision(store, { studentCode, decision, note = '' } = {}) {
   const valid = ['not_released', 'released', 'remediation_hold', 'integrity_hold', 'cleared_next_gate']
   if (!studentCode || !valid.includes(decision)) {
@@ -384,6 +429,14 @@ export function dismissAlertForStudent(store, alertId, studentCode = 'local-lear
   }
 }
 
+export function removeLecturerAlert(store, alertId) {
+  const base = store || createInitialLecturerStore()
+  return {
+    ...base,
+    alerts: (base.alerts || []).filter((a) => a.id !== alertId),
+  }
+}
+
 /**
  * Compute per-student and cohort-wide diagnostics across Gate 01, Topic 1–5 Hubs, Mastery Pathway, Issues, and MS Office uploads.
  */
@@ -401,7 +454,25 @@ export function buildCohortDiagnostics({
 
   const roster = getAllRoster(gate)
   const rosterCodes = new Set(roster.map((r) => r.studentCode))
-  const extraOwners = Object.keys(gate.recordsByStudent || {}).filter((c) => !rosterCodes.has(c))
+  const extraCodeSet = new Set()
+  const addExtraCode = (code) => {
+    const clean = String(code || '').trim()
+    if (!clean || clean === 'ALL' || clean === 'COHORT' || clean === 'LECTURER-AUDIT' || rosterCodes.has(clean)) {
+      return
+    }
+    extraCodeSet.add(clean)
+  }
+
+  for (const c of Object.keys(gate.recordsByStudent || {})) addExtraCode(c)
+  for (const storeObj of Object.values(topicStores || {})) {
+    for (const [owner, prog] of Object.entries(storeObj?.byOwner || {})) {
+      if (prog?.modules && Object.keys(prog.modules).length > 0) addExtraCode(owner)
+    }
+  }
+  for (const r of office.reports || []) addExtraCode(r.studentCode)
+  for (const i of lecturer.issues || []) addExtraCode(i.studentCode)
+  for (const c of Object.keys(lecturer.customPathways || {})) addExtraCode(c)
+  for (const c of Object.keys(lecturer.gateDecisions || {})) addExtraCode(c)
 
   const studentList = [
     ...roster.map((r) => ({
@@ -409,9 +480,9 @@ export function buildCohortDiagnostics({
       name: `${r.firstName} ${r.lastName}`,
       isRostered: true,
     })),
-    ...extraOwners.map((c) => ({
+    ...[...extraCodeSet].map((c) => ({
       studentCode: c,
-      name: c,
+      name: c === 'local-learner' ? 'Local Learner (Unclaimed)' : c,
       isRostered: false,
     })),
   ]
@@ -629,6 +700,15 @@ export function formatCohortReportText(diagnostics) {
     `Average Gate 01 Score: ${t.averageGatePercent !== null ? `${t.averageGatePercent}%` : 'N/A'}`,
     `Urgent Learners: ${t.urgentLearners} | Integrity Holds: ${t.integrityHolds} | Open Issues: ${t.openIssues}`,
     `MS Office Files Consumed: ${t.officeFilesConsumed}`,
+    ...(diagnostics.n5CourseworkEstimate?.valid && diagnostics.n5CourseworkEstimate.secured > 0
+      ? [
+          `Local N5 Coursework Secured: ${diagnostics.n5CourseworkEstimate.secured.toFixed(1)}%${
+            diagnostics.n5CourseworkEstimate.needed !== null
+              ? ` (Exam mark needed for 40% pass: ${diagnostics.n5CourseworkEstimate.needed.toFixed(1)}%)`
+              : ''
+          }`,
+        ]
+      : []),
     '',
     'COHORT LEAK FREQUENCY:',
     ...(diagnostics.leakFrequency.length

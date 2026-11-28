@@ -1,5 +1,5 @@
 import { challenges, challengeSources } from './challenge-data'
-import React, { useMemo, useState } from 'react'
+import React, { Suspense, lazy, useMemo, useState } from 'react'
 import {
   AlertTriangle,
   Bell,
@@ -36,7 +36,9 @@ import {
   togglePathwayStep,
   writeLecturerStore,
 } from './lecturer-engine.js'
-import { LecturerConsole } from './LecturerConsole.jsx'
+const LecturerConsole = lazy(() =>
+  import('./LecturerConsole.jsx').then((m) => ({ default: m.LecturerConsole }))
+)
 
 const unique = (items, key) => [...new Set(items.map((item) => item[key]))].sort()
 const date = () => new Date().toISOString()
@@ -904,5 +906,9 @@ export function Notices({ state, notify }) {
 }
 
 export function Admin({ state, update, notify, leave }) {
-  return <LecturerConsole state={state} update={update} notify={notify} leave={leave} />
+  return (
+    <Suspense fallback={<div className="card padded">Loading Lecturer Console…</div>}>
+      <LecturerConsole state={state} update={update} notify={notify} leave={leave} />
+    </Suspense>
+  )
 }
