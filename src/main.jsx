@@ -1,10 +1,11 @@
 import React,{useEffect,useRef,useState} from 'react'
 import { createRoot } from 'react-dom/client'
-import { ArrowUpRight, Bell, BookOpen, ChartNoAxesColumnIncreasing, ChevronDown, ClipboardList, CloudOff, FlaskConical, Globe, Layers3, LayoutDashboard, LockKeyhole, Monitor, Menu, MessageSquare, Network, Settings2, ShieldCheck, Target, Wifi, X } from 'lucide-react'
+import { ArrowUpRight, Bell, BookOpen, ChartNoAxesColumnIncreasing, ChevronDown, ClipboardList, CloudOff, Database, FlaskConical, Globe, Layers3, LayoutDashboard, LockKeyhole, Monitor, Menu, MessageSquare, Network, Settings2, ShieldCheck, Target, Wifi, X } from 'lucide-react'
 import { Dashboard } from './ui'
 import { N5Gate } from './N5Gate'
 import { Topic1 } from './Topic1'
 import { Topic2 } from './Topic2'
+import { Topic3 } from './Topic3'
 import { Topic4 } from './Topic4'
 import { Topic5 } from './Topic5'
 import { Learning } from './learning'
@@ -26,6 +27,7 @@ const nav = [
   ['n5-gate','N5 Gate 01',ShieldCheck],
   ['topic-1','Topic 1 Hub',Layers3],
   ['topic-2','Topic 2 Hub',Network],
+  ['topic-3','Topic 3 Hub',Database],
   ['topic-4','Topic 4 Hub',Globe],
   ['topic-5','Topic 5 Hub',LockKeyhole],
   ['progress','My Progress',ChartNoAxesColumnIncreasing],
@@ -84,6 +86,7 @@ function App(){
     'n5-gate':<N5Gate notify={notify} onNav={go}/>,
     'topic-1':<Topic1 notify={notify} onNav={go}/>,
     'topic-2':<Topic2 notify={notify} onNav={go}/>,
+    'topic-3':<Topic3 notify={notify} onNav={go}/>,
     'topic-4':<Topic4 notify={notify} onNav={go}/>,
     'topic-5':<Topic5 notify={notify} onNav={go}/>,
     progress:<Progress {...shared} openPractice={openPractice} openChallenge={chooseChallenge}/>,
@@ -100,16 +103,16 @@ function App(){
       <button className="icon-button close-menu" aria-label="Close navigation" onClick={()=>setMenu(false)}><X size={21}/></button>
       <div className="nav-label">WORKSPACE</div>
       <nav aria-label="Main navigation">{nav.map(([id,label,Icon])=><a key={id} href={'#'+id} className={id===page?'active':''} aria-current={id===page?'page':undefined} onClick={()=>go(id)}><Icon size={18} strokeWidth={1.8}/><span>{label}</span></a>)}</nav>
-      <div className="sidebar-footer">{install&&<button className="btn outline install" onClick={async()=>{await install.prompt();setInstall(null)}}>Install ComputeLab</button>}<a href="#admin" className={'admin-link '+(page==='admin'?'active':'')} aria-current={page==='admin'?'page':undefined} onClick={()=>go('admin')}><Settings2 size={18}/> Admin demo <ArrowUpRight size={15}/></a><p>Progress saved on this device</p></div>
+      <div className="sidebar-footer">{install&&<button className="btn outline install" onClick={async()=>{await install.prompt();setInstall(null)}}>Install ComputeLab</button>}<a href="#admin" className={'admin-link '+(page==='admin'?'active':'')} aria-current={page==='admin'?'page':undefined} onClick={()=>go('admin')}><Settings2 size={18}/> Lecturer console <ArrowUpRight size={15}/></a><p>Progress saved on this device</p></div>
     </aside>
     <div className="workspace">
       <header className="topbar">
-        <div className="top-left"><button className="icon-button menu-button" aria-expanded={menu} aria-label="Open navigation" onClick={()=>setMenu(true)}><Menu size={23}/></button><span className="top-crumb">{nav.find(item=>item[0]===page)?.[1]||'Admin Dashboard'}</span><span className="mobile-brand">Sankofa ComputeLab</span></div>
+        <div className="top-left"><button className="icon-button menu-button" aria-expanded={menu} aria-label="Open navigation" onClick={()=>setMenu(true)}><Menu size={23}/></button><span className="top-crumb">{nav.find(item=>item[0]===page)?.[1]||'Lecturer Console'}</span><span className="mobile-brand">Sankofa ComputeLab</span></div>
         <div className="top-right"><span className={'status '+(!online?'offline':'')}>{online?<Wifi size={15}/>:<CloudOff size={15}/>} <span>{online?'Online':'Offline'}</span></span><a href="#notices" className="icon-button top-bell" aria-label="College notices" onClick={()=>go('notices')}><Bell size={19}/></a><label className="course-switch"><span className="avatar">{courses.find(row=>row.id===course)?.code}</span><select aria-label="Active course shortcut" value={course} onChange={e=>chooseCourse(e.target.value)}>{courses.map(row=><option key={row.id} value={row.id}>{row.title}</option>)}</select><ChevronDown size={14}/></label></div>
       </header>
       <main id="main-content" tabIndex={-1}>{pages[page]}</main>
     </div>
-    <nav className="bottom-nav" aria-label="Quick navigation">{nav.filter(row=>!['learning','n5-gate','topic-1','topic-2','topic-4','topic-5'].includes(row[0])).slice(0,5).map(([id,label,Icon])=><a key={id} href={'#'+id} className={page===id?'active':''} aria-current={page===id?'page':undefined} onClick={()=>go(id)}><Icon size={19}/><span>{{overview:'Overview',library:'Library',practice:'Practice',challenges:'Lab',progress:'Progress'}[id]}</span></a>)}<button onClick={()=>setMenu(true)} aria-label="More pages"><Menu size={19}/><span>More</span></button></nav>
+    <nav className="bottom-nav" aria-label="Quick navigation">{nav.filter(row=>!['learning','n5-gate','topic-1','topic-2','topic-3','topic-4','topic-5'].includes(row[0])).slice(0,5).map(([id,label,Icon])=><a key={id} href={'#'+id} className={page===id?'active':''} aria-current={page===id?'page':undefined} onClick={()=>go(id)}><Icon size={19}/><span>{{overview:'Overview',library:'Library',practice:'Practice',challenges:'Lab',progress:'Progress'}[id]}</span></a>)}<button onClick={()=>setMenu(true)} aria-label="More pages"><Menu size={19}/><span>More</span></button></nav>
     {toast&&<div className="toast" role="status">{toast}</div>}
   </div>
 }

@@ -2,7 +2,9 @@ import React from 'react'
 import { diagnosticAction } from './diagnostic-action.js'
 import { CapabilityDisclosure } from './CapabilityDisclosure.jsx'
 import { capabilities } from './capabilities.js'
-import { Route, ArrowRight, ArrowUpRight, BookMarked, BookOpen, Bookmark, ChartNoAxesColumnIncreasing, CircleHelp, ClipboardList, FileText, Globe, GraduationCap, Layers3, LayoutGrid, LockKeyhole, Network, NotebookPen, ShieldCheck, Table2, Target, Timer, FileCheck2 } from 'lucide-react'
+import { readGateStore } from './n5-gate-engine.js'
+import { readLecturerStore } from './lecturer-engine.js'
+import { Route, ArrowRight, ArrowUpRight, Bell, BookMarked, BookOpen, Bookmark, ChartNoAxesColumnIncreasing, ClipboardList, Database, FileText, Globe, GraduationCap, Layers3, LockKeyhole, Network, NotebookPen, ShieldCheck, Table2, Target, Timer, FileCheck2 } from 'lucide-react'
 
 export const appIcons = {Theory:BookOpen, OneNote:NotebookPen, Word:FileText, Excel:Table2, Integrated:Layers3}
 export const appColors = {Theory:'purple', OneNote:'pink', Word:'blue', Excel:'mint', Integrated:'peach'}
@@ -30,11 +32,20 @@ export function Dashboard({state,onNav,onPractice,questions,course,setCourse,cou
     [Timer,'mint','Timed quizzes','Check your recall under a time limit.',()=>onPractice('quiz')],
     [ClipboardList,'blue','Mock exams','Rehearse whole sections or create your own mock.',()=>onPractice('mocks')]
   ]
+  const gateStore = readGateStore()
+  const lecturerStore = readLecturerStore()
+  const studentCode = gateStore?.session?.studentCode || 'local-learner'
+  const activeAlerts = (lecturerStore.alerts || []).filter(
+    a => (a.targetStudentCode === 'ALL' || a.targetStudentCode === studentCode) && !(a.dismissedBy || []).includes(studentCode)
+  )
+  const customPathway = lecturerStore.customPathways?.[studentCode] || null
+  const gateDecision = lecturerStore.gateDecisions?.[studentCode] || null
   const toolActions = course === 'cpn5'
     ? [
         [ShieldCheck,'mint','N5 Gate 01','Locked 50-minute gate, leak profile, recovery drills & submission.',()=>onNav('n5-gate')],
         [Layers3,'blue','Topic 1 Hub','Sections 1–8 concepts, CBT traps, Quick Checks & practical evidence.',()=>onNav('topic-1')],
         [Network,'purple','Topic 2 Hub','Network types, architectures, Digital Era e-concepts & 150-mark mastery.',()=>onNav('topic-2')],
+        [Database,'blue','Topic 3 Hub','Data vs Info, Computational Thinking, keys, queries & verification.',()=>onNav('topic-3')],
         [Globe,'mint','Topic 4 Hub','Internet apps, Web 1.0–4.0, service tech, static/dynamic sites & search evaluation.',()=>onNav('topic-4')],
         [LockKeyhole,'peach','Topic 5 Hub','Emerging tech, ICT impact, cybercrime methods, prevention & ICT ethics.',()=>onNav('topic-5')],
         ...actions
@@ -45,6 +56,24 @@ export function Dashboard({state,onNav,onPractice,questions,course,setCourse,cou
       <Select label="Active course" value={course} onChange={setCourse} options={courses}/>
     </Header>
     <CapabilityDisclosure label="What this workspace supports" items={capabilities}/>
+    {(activeAlerts.length > 0 || customPathway || gateDecision) && (
+      <section className="card padded" style={{marginBottom:16}} aria-label="Lecturer pathway and alerts">
+        <div className="eyebrow"><Bell size={13}/> LECTURER UPDATES · {studentCode}</div>
+        {gateDecision && <p className="compact"><strong>Gate status:</strong> {gateDecision.decision}{gateDecision.note ? ` — ${gateDecision.note}` : ''}</p>}
+        {activeAlerts.slice(0,2).map(a => <p className="compact" key={a.id}><strong>[{a.severity.toUpperCase()}] {a.title}:</strong> {a.message}</p>)}
+        {customPathway && (
+          <div style={{marginTop:6}}>
+            <p className="compact"><strong>Assigned Custom Pathway ({customPathway.steps.filter(s=>s.completed).length}/{customPathway.steps.length} done):</strong> {customPathway.note}</p>
+            <div className="button-row" style={{marginTop:6}}>
+              {customPathway.steps.slice(0,3).map(step => (
+                <button key={step.id} className="btn outline" onClick={()=>onNav(step.route)}>{step.title} <ArrowRight size={14}/></button>
+              ))}
+              <button className="btn text-button" onClick={()=>onNav('feedback')}>Open Help &amp; Pathway Details</button>
+            </div>
+          </div>
+        )}
+      </section>
+    )}
     <section className="hero">
       <div className="hero-copy">
         <div className="hero-kicker"><GraduationCap size={16}/> EXAM PREPARATION</div>
@@ -64,6 +93,7 @@ export function Dashboard({state,onNav,onPractice,questions,course,setCourse,cou
         <a className="btn primary" href="#n5-gate" onClick={e=>{e.preventDefault();onNav('n5-gate')}}>Open N5 Gate 01 (Auth → Submission) <ArrowRight size={16}/></a>
         <a className="btn outline" href="#topic-1" onClick={e=>{e.preventDefault();onNav('topic-1')}}>Open Topic 1 Modules (Sections 1–8) <ArrowRight size={16}/></a>
         <a className="btn outline" href="#topic-2" onClick={e=>{e.preventDefault();onNav('topic-2')}}>Open Topic 2 Modules (Networks) <ArrowRight size={16}/></a>
+        <a className="btn outline" href="#topic-3" onClick={e=>{e.preventDefault();onNav('topic-3')}}>Open Topic 3 (Data &amp; Thinking) <ArrowRight size={16}/></a>
         <a className="btn outline" href="#topic-4" onClick={e=>{e.preventDefault();onNav('topic-4')}}>Open Topic 4 (Internet) <ArrowRight size={16}/></a>
         <a className="btn outline" href="#topic-5" onClick={e=>{e.preventDefault();onNav('topic-5')}}>Open Topic 5 (Digital Citizenship) <ArrowRight size={16}/></a>
       </div>

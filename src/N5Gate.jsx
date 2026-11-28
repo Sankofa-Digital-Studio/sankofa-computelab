@@ -55,6 +55,7 @@ import {
   writeGateStore,
 } from './n5-gate-engine.js'
 import { downloadFile, saveFiles } from './files.js'
+import { ingestOfficeFile, readOfficeIngestStore, recordOfficeInspection, writeOfficeIngestStore } from './office-ingest.js'
 import { Header } from './ui.jsx'
 
 const STEPPER_ITEMS = [
@@ -402,6 +403,23 @@ export function N5Gate({ notify, onNav }) {
     try {
       const fileId = `n5g1-${session.studentCode}-${Date.now()}`
       await saveFiles([{ id: fileId, blob: file }])
+      let officeReport = null
+      try {
+        const buffer = await file.arrayBuffer()
+        officeReport = await ingestOfficeFile({
+          fileName: file.name,
+          buffer,
+          byteSize: file.size,
+          studentCode: session.studentCode,
+          course: 'cpn5',
+          contextTag: 'n5-gate-01-recovery',
+          fileId,
+        })
+        const nextOffice = recordOfficeInspection(readOfficeIngestStore(), officeReport)
+        writeOfficeIngestStore(nextOffice)
+      } catch {
+        // Non-Office binary files still remain attached cleanly.
+      }
       commitStore((prev) =>
         updateActiveStudentRecord(prev, (r) => ({
           ...r,
@@ -409,12 +427,23 @@ export function N5Gate({ notify, onNav }) {
             ...r.recovery,
             evidenceFiles: [
               ...(r.recovery?.evidenceFiles || []),
-              { id: fileId, file: file.name, size: file.size, savedAt: Date.now() },
+              {
+                id: fileId,
+                file: file.name,
+                size: file.size,
+                savedAt: Date.now(),
+                officeSummary: officeReport?.summary || '',
+                officeWarnings: officeReport?.leakWarnings?.length || 0,
+              },
             ],
           },
         }))
       )
-      notify?.(`Attached "${file.name}" to your device evidence vault.`)
+      notify?.(
+        officeReport?.leakWarnings?.length
+          ? `Attached "${file.name}" · ${officeReport.leakWarnings.length} Office check warning(s) flagged.`
+          : `Attached "${file.name}" to your device evidence vault.`
+      )
     } catch {
       notify?.('Could not save evidence file on this device. Keep your original file.')
     } finally {
