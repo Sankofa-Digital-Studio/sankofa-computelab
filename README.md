@@ -72,3 +72,10 @@ The `#topic-1` workspace provides structured N5 Topic 1 learning and practical e
 
 - **5-Block Lesson Flow**: Concept & CBT Exam Trap tip, High-Risk Contrasts table, Guided Worked Example, interactive 3-item Quick Check (39 total questions with rationale review), and Practical Evidence Task with IndexedDB file attachments.
 - **Student Session Sync & Export**: Scopes progress to the active N5 Gate student session (or `local-learner`) and exports a plain-text Topic 1 evidence summary.
+
+## Topic 2 Hub (`#topic-2`)
+
+The `#topic-2` workspace shares the reusable `TopicHub` + `topic-engine.js` architecture across all 6 N5 Networking & Communication modules (`1A` Network Types & Coverage, `1B` Architectures & Components, `2A` Networks & the Digital Era, `2B` Reasons for Using Networks, `3` Consolidation Revision Map, and `Mastery` 150-Mark Readiness):
+
+- **5-Block Lesson Flow**: Concept & CBT Exam Trap tip, High-Risk Contrasts table (LAN/MAN/WAN, Switch/Router, Client-Server/P2P, Resource Sharing/Centralisation), Guided Worked Example, interactive 3-item Quick Check (18 total questions with rationale review), and Practical Evidence Task with IndexedDB file attachments.
+- **Student Session Sync & Export**: Scopes progress to the active N5 Gate student session (or `local-learner`) and exports a plain-text Topic 2 evidence summary.
