@@ -79,3 +79,8 @@ The `#topic-2` workspace shares the reusable `TopicHub` + `topic-engine.js` arch
 
 - **5-Block Lesson Flow**: Concept & CBT Exam Trap tip, High-Risk Contrasts table (LAN/MAN/WAN, Switch/Router, Client-Server/P2P, Resource Sharing/Centralisation), Guided Worked Example, interactive 3-item Quick Check (18 total questions with rationale review), and Practical Evidence Task with IndexedDB file attachments.
 - **Student Session Sync & Export**: Scopes progress to the active N5 Gate student session (or `local-learner`) and exports a plain-text Topic 2 evidence summary.
+
+## Topic 4 Hub (`#topic-4`) & Topic 5 Hub (`#topic-5`)
+
+- **Topic 4 (`#topic-4`)**: 10 modules covering Internet applications & plug-ins (`1A`), Web 1.0–4.0 (`1B`), social platforms & multimedia (`1C`), Internet service technologies (`2A`), static vs dynamic sites (`2B`), location/mobile/e-commerce (`2C`), source reliability (`3A`), Boolean/phrase search queries & website evaluation (`3B`), consolidation (`4`), and 150-mark mastery (`Mastery`) with 30 interactive Quick Check questions.
+- **Topic 5 (`#topic-5`)**: 7 modules covering emerging technology (`1A`), ICT human impact (`1B`), balanced impact debates (`1B Ext`), cybercriminal methods (`2A`), cybercrime types (`2B`), effects & technical prevention controls (`2C`), and ICT ethics (`3A`) with 21 interactive Quick Check questions.

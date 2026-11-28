@@ -1,10 +1,12 @@
 import React,{useEffect,useRef,useState} from 'react'
 import { createRoot } from 'react-dom/client'
-import { ArrowUpRight, Bell, BookOpen, ChartNoAxesColumnIncreasing, ChevronDown, ClipboardList, CloudOff, FlaskConical, Layers3, LayoutDashboard, Monitor, Menu, MessageSquare, Network, Settings2, ShieldCheck, Target, Wifi, X } from 'lucide-react'
+import { ArrowUpRight, Bell, BookOpen, ChartNoAxesColumnIncreasing, ChevronDown, ClipboardList, CloudOff, FlaskConical, Globe, Layers3, LayoutDashboard, LockKeyhole, Monitor, Menu, MessageSquare, Network, Settings2, ShieldCheck, Target, Wifi, X } from 'lucide-react'
 import { Dashboard } from './ui'
 import { N5Gate } from './N5Gate'
 import { Topic1 } from './Topic1'
 import { Topic2 } from './Topic2'
+import { Topic4 } from './Topic4'
+import { Topic5 } from './Topic5'
 import { Learning } from './learning'
 import { ChallengeLab } from './challenge'
 import { Practice, Progress } from './practice'
@@ -24,6 +26,8 @@ const nav = [
   ['n5-gate','N5 Gate 01',ShieldCheck],
   ['topic-1','Topic 1 Hub',Layers3],
   ['topic-2','Topic 2 Hub',Network],
+  ['topic-4','Topic 4 Hub',Globe],
+  ['topic-5','Topic 5 Hub',LockKeyhole],
   ['progress','My Progress',ChartNoAxesColumnIncreasing],
   ['assignments','Assignments',ClipboardList],
   ['feedback','Feedback',MessageSquare],
@@ -80,6 +84,8 @@ function App(){
     'n5-gate':<N5Gate notify={notify} onNav={go}/>,
     'topic-1':<Topic1 notify={notify} onNav={go}/>,
     'topic-2':<Topic2 notify={notify} onNav={go}/>,
+    'topic-4':<Topic4 notify={notify} onNav={go}/>,
+    'topic-5':<Topic5 notify={notify} onNav={go}/>,
     progress:<Progress {...shared} openPractice={openPractice} openChallenge={chooseChallenge}/>,
     assignments:<Assignments {...shared}/>,
     feedback:<Feedback {...shared}/>,
@@ -103,7 +109,7 @@ function App(){
       </header>
       <main id="main-content" tabIndex={-1}>{pages[page]}</main>
     </div>
-    <nav className="bottom-nav" aria-label="Quick navigation">{nav.filter(row=>row[0]!=='learning'&&row[0]!=='n5-gate'&&row[0]!=='topic-1'&&row[0]!=='topic-2').slice(0,5).map(([id,label,Icon])=><a key={id} href={'#'+id} className={page===id?'active':''} aria-current={page===id?'page':undefined} onClick={()=>go(id)}><Icon size={19}/><span>{{overview:'Overview',library:'Library',practice:'Practice',challenges:'Lab',progress:'Progress','n5-gate':'Gate 01','topic-1':'Topic 1','topic-2':'Topic 2'}[id]}</span></a>)}<button onClick={()=>setMenu(true)} aria-label="More pages"><Menu size={19}/><span>More</span></button></nav>
+    <nav className="bottom-nav" aria-label="Quick navigation">{nav.filter(row=>!['learning','n5-gate','topic-1','topic-2','topic-4','topic-5'].includes(row[0])).slice(0,5).map(([id,label,Icon])=><a key={id} href={'#'+id} className={page===id?'active':''} aria-current={page===id?'page':undefined} onClick={()=>go(id)}><Icon size={19}/><span>{{overview:'Overview',library:'Library',practice:'Practice',challenges:'Lab',progress:'Progress'}[id]}</span></a>)}<button onClick={()=>setMenu(true)} aria-label="More pages"><Menu size={19}/><span>More</span></button></nav>
     {toast&&<div className="toast" role="status">{toast}</div>}
   </div>
 }

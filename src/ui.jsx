@@ -2,7 +2,7 @@ import React from 'react'
 import { diagnosticAction } from './diagnostic-action.js'
 import { CapabilityDisclosure } from './CapabilityDisclosure.jsx'
 import { capabilities } from './capabilities.js'
-import { Route, ArrowRight, ArrowUpRight, BookMarked, BookOpen, Bookmark, ChartNoAxesColumnIncreasing, CircleHelp, ClipboardList, FileText, GraduationCap, Layers3, LayoutGrid, Network, NotebookPen, ShieldCheck, Table2, Target, Timer, FileCheck2 } from 'lucide-react'
+import { Route, ArrowRight, ArrowUpRight, BookMarked, BookOpen, Bookmark, ChartNoAxesColumnIncreasing, CircleHelp, ClipboardList, FileText, Globe, GraduationCap, Layers3, LayoutGrid, LockKeyhole, Network, NotebookPen, ShieldCheck, Table2, Target, Timer, FileCheck2 } from 'lucide-react'
 
 export const appIcons = {Theory:BookOpen, OneNote:NotebookPen, Word:FileText, Excel:Table2, Integrated:Layers3}
 export const appColors = {Theory:'purple', OneNote:'pink', Word:'blue', Excel:'mint', Integrated:'peach'}
@@ -35,6 +35,8 @@ export function Dashboard({state,onNav,onPractice,questions,course,setCourse,cou
         [ShieldCheck,'mint','N5 Gate 01','Locked 50-minute gate, leak profile, recovery drills & submission.',()=>onNav('n5-gate')],
         [Layers3,'blue','Topic 1 Hub','Sections 1–8 concepts, CBT traps, Quick Checks & practical evidence.',()=>onNav('topic-1')],
         [Network,'purple','Topic 2 Hub','Network types, architectures, Digital Era e-concepts & 150-mark mastery.',()=>onNav('topic-2')],
+        [Globe,'mint','Topic 4 Hub','Internet apps, Web 1.0–4.0, service tech, static/dynamic sites & search evaluation.',()=>onNav('topic-4')],
+        [LockKeyhole,'peach','Topic 5 Hub','Emerging tech, ICT impact, cybercrime methods, prevention & ICT ethics.',()=>onNav('topic-5')],
         ...actions
       ]
     : actions
@@ -62,6 +64,8 @@ export function Dashboard({state,onNav,onPractice,questions,course,setCourse,cou
         <a className="btn primary" href="#n5-gate" onClick={e=>{e.preventDefault();onNav('n5-gate')}}>Open N5 Gate 01 (Auth → Submission) <ArrowRight size={16}/></a>
         <a className="btn outline" href="#topic-1" onClick={e=>{e.preventDefault();onNav('topic-1')}}>Open Topic 1 Modules (Sections 1–8) <ArrowRight size={16}/></a>
         <a className="btn outline" href="#topic-2" onClick={e=>{e.preventDefault();onNav('topic-2')}}>Open Topic 2 Modules (Networks) <ArrowRight size={16}/></a>
+        <a className="btn outline" href="#topic-4" onClick={e=>{e.preventDefault();onNav('topic-4')}}>Open Topic 4 (Internet) <ArrowRight size={16}/></a>
+        <a className="btn outline" href="#topic-5" onClick={e=>{e.preventDefault();onNav('topic-5')}}>Open Topic 5 (Digital Citizenship) <ArrowRight size={16}/></a>
       </div>
     </section>}
     <div className="dashboard-body">
